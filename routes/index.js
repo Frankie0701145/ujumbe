@@ -8,11 +8,12 @@ router.get('/', function(req, res, next) {
 
 /* Get login page */
 router.get('/login', function(req, res, next){
-  res.render('login', { title: "UjamaaWatch" });
+
+  res.render('login', { title: "UjamaaWatch", req: req });
 });
 
 router.post('/login',function(req, res, next){
-      res.send("trying to login");
+      res.send("trying to loging");
 });
 
 module.exports = router;

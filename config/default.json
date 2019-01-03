@@ -1,0 +1,7 @@
+
+
+{
+  "Mlab": {
+    "mongoDBURI": "mongodb://Francis7:password7@ds121945.mlab.com:21945/ujamiiwatch"
+  }
+}

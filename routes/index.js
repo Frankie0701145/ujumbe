@@ -8,12 +8,15 @@ router.get('/', function(req, res, next) {
 
 /* Get login page */
 router.get('/login', function(req, res, next){
-
   res.render('login', { title: "UjamaaWatch", req: req });
 });
-
+// Post login
 router.post('/login',function(req, res, next){
       res.send("trying to loging");
+});
+// Get sign up page
+router.get('/signup', function(req, res, next){
+    res.render("signup", {title: "UjamaaWatch", req: req});
 });
 
 module.exports = router;

@@ -1,0 +1,91 @@
+  <!DOCTYPE html>
+  <html lang="en" dir="ltr">
+
+      <%- include ./partials/head %>
+
+      <body>
+        <%- include ./partials/navBar %>
+
+        <div class="container">
+
+            <div class="row mt-4 pt-5">
+
+              <div class="col-8 mx-auto border border-white shadow-lg p-4 bg-white rounded mt-4">
+                  <h3 class="text-center">Sign Up</h3>
+                  <form action="/signup" method="post">
+                        <input type="hidden" name="_csrf" value=<%= req.csrfToken() %> />
+                        <!-- Name -->
+                        <div class="row">
+                    			<div class="col-xs-6 col-sm-6 col-md-6">
+                    				<div class="form-group">
+                              <label for="firstName">First Name.</label>
+                    					<input id="firstName" type="text" name="firstName" placeholder="First Name" class="form-control input-sm" required= true>
+                    				</div>
+                    			</div>
+                    			<div class="col-xs-6 col-sm-6 col-md-6">
+                    				<div class="form-group">
+                              <label for="lastName">Last Name.</label>
+                    					<input id="lastName" type="text" name="lastName" placeholder="Last Name" class="form-control input-sm" required= true>
+                    				</div>
+                    			</div>
+                    		</div>
+                        <!-- Contact -->
+                        <div class="row">
+                          <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                              <label for="email">Email address</label>
+                              <input id="email" name="email" type="email" class="form-control input-sm" placeholder="Email Address" required= true aria-describedby="emailHelp">
+                              <small id="emailHelp" class="form-text text-muted">We'll never share your email without our permission.</small>
+                            </div>
+                          </div>
+                          <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                              <label for="tel">Phone No.</label>
+                              <input id='tel' name="phoneNumber" type="tel" class="form-control input-sm" placeholder="0xxxxxxxxx" required= true aria-describedby="telHelp">
+                              <small id="telHelp" class="form-text text-muted">We'll never share your telephone without our permission.</small>
+                            </div>
+                          </div>
+                        </div>
+                        <!--Home location -->
+                        <div class="form-group">
+                          <label for="homeLocation">Home Location</label>
+                          <input name="homeAddress" type="text" class="form-control" id="homeLocation" aria-describedby="homeLocationHelp" required=true placeholder="Location, City, Country">
+                          <small id="homeLocationHelp" class="form-text text-muted">We'll never share your Home location without our permission.</small>
+                        </div>
+                        <!--Work location -->
+                        <div class="form-group">
+                          <label for="workLocation">Work Location</label>
+                          <input name="workAddress" type="text" class="form-control" id="workLocation" aria-describedby="workLocationHelp" required=true placeholder="Location, City, Country">
+                          <small id="workLocationHelp" class="form-text text-muted">We'll never share your Home location without our permission.</small>
+                        </div>
+                        <!-- password -->
+                        <div class="row">
+                      			<div class="col-xs-6 col-sm-6 col-md-6">
+                      				<div class="form-group">
+                                <label for="password">Password</label>
+                      					<input type="password" name="password" id="password" class="form-control input-sm" required=true>
+                      				</div>
+                      			</div>
+                      			<div class="col-xs-6 col-sm-6 col-md-6">
+                      				<div class="form-group">
+                                <label for="passwordConfirmation">Password Confirmation</label>
+                      					<input type="password" name="passwordConfirmation" id="passwordConfirmation" class="form-control input-sm" required=true>
+                      				</div>
+                      			</div>
+                    		</div>
+                        <button class="btn btn-primary btn-block" type="submit" name="button">Submit</button>
+                  </form>
+              </div>
+
+            </div>
+
+        </div>
+
+      </body>
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAW_xLmEjX00dhxc2jqJf0rB_wio2FLjnM&libraries=places"></script>
+
+      <script>
+              new google.maps.places.Autocomplete(document.getElementById('homeLocation'));
+              new google.maps.places.Autocomplete(document.getElementById('workLocation'));
+      </script>
+  </html>

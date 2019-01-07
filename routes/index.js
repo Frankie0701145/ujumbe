@@ -18,5 +18,10 @@ router.post('/login',function(req, res, next){
 router.get('/signup', function(req, res, next){
     res.render("signup", {title: "UjamaaWatch", req: req});
 });
+// Post signup
+router.post('/signup', function(req, res, next){
+      console.log(req.head);
+      console.log(req.body);
+});
 
 module.exports = router;

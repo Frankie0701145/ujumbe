@@ -12,6 +12,15 @@
 
               <div class="col-8 mx-auto border border-white shadow-lg p-4 bg-white rounded mt-4">
                   <h3 class="text-center">Sign Up</h3>
+                    <%if( errors ){%>
+                        <div class="row alert alert-danger" role="alert">
+                          <ul>
+                            <% errors.forEach(function(err,index){%>
+                              <li><%= err.message %></li>
+                            <% }); %>
+                          </ul>
+                        </div>
+                    <%}%>
                   <form action="/signup" method="post">
                         <input type="hidden" name="_csrf" value=<%= req.csrfToken() %> />
                         <!-- Name -->
@@ -46,6 +55,21 @@
                             </div>
                           </div>
                         </div>
+                        <!-- password -->
+                        <div class="row">
+                      			<div class="col-xs-6 col-sm-6 col-md-6">
+                      				<div class="form-group">
+                                <label for="password">Password</label>
+                      					<input type="password" name="password" id="password" minlength="8" class="form-control input-sm" required=true>
+                      				</div>
+                      			</div>
+                      			<div class="col-xs-6 col-sm-6 col-md-6">
+                      				<div class="form-group">
+                                <label for="passwordConfirmation">Password Confirmation</label>
+                      					<input type="password" name="passwordConfirmation" id="passwordConfirmation" class="form-control input-sm" required=true>
+                      				</div>
+                      			</div>
+                    		</div>
                         <!--Home location -->
                         <div class="form-group">
                           <label for="homeLocation">Home Location</label>
@@ -58,21 +82,7 @@
                           <input name="workAddress" type="text" class="form-control" id="workLocation" aria-describedby="workLocationHelp" required=true placeholder="Location, City, Country">
                           <small id="workLocationHelp" class="form-text text-muted">We'll never share your Home location without our permission.</small>
                         </div>
-                        <!-- password -->
-                        <div class="row">
-                      			<div class="col-xs-6 col-sm-6 col-md-6">
-                      				<div class="form-group">
-                                <label for="password">Password</label>
-                      					<input type="password" name="password" id="password" class="form-control input-sm" required=true>
-                      				</div>
-                      			</div>
-                      			<div class="col-xs-6 col-sm-6 col-md-6">
-                      				<div class="form-group">
-                                <label for="passwordConfirmation">Password Confirmation</label>
-                      					<input type="password" name="passwordConfirmation" id="passwordConfirmation" class="form-control input-sm" required=true>
-                      				</div>
-                      			</div>
-                    		</div>
+
                         <button class="btn btn-primary btn-block" type="submit">Submit</button>
                   </form>
               </div>

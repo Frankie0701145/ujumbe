@@ -4,7 +4,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const csurf = require('csurf');
 const logger = require('morgan');
-const expressValidator = require('express-validator');
 
 const indexRouter = require('./routes/index');
 
@@ -19,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const csrfMiddleware = csurf({cookie: true});
 app.use(cookieParser());
-app.use(expressValidator);
+
 app.use(csrfMiddleware);
 app.use(express.static(path.join(__dirname, 'public')));
 

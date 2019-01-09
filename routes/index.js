@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const signup = require("../controllers/userController").signup;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -8,20 +9,17 @@ router.get('/', function(req, res, next) {
 
 /* Get login page */
 router.get('/login', function(req, res, next){
-  res.render('login', { title: "UjamaaWatch", req: req });
+  res.render('login', { title: 'UjamaaWatch', req: req });
 });
 // Post login
 router.post('/login',function(req, res, next){
-      res.send("trying to loging");
+      res.send('trying to loging');
 });
 // Get sign up page
 router.get('/signup', function(req, res, next){
-    res.render("signup", {title: "UjamaaWatch", req: req});
+    res.render('signup', {title: 'UjamaaWatch', req: req, errors: null});
 });
 // Post signup
-router.post('/signup', function(req, res, next){
-      console.log(req.head);
-      console.log(req.body);
-});
+router.post( '/signup', signup);
 
 module.exports = router;

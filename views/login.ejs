@@ -13,6 +13,15 @@
           <div class="col-6 mx-auto border border-white shadow-lg p-4 bg-white rounded mt-4">
 
             <h3 class="text-center">Log In</h3>
+            <%if( errors ){%>
+                <div class="row alert alert-danger" role="alert">
+                  <ul>
+                    <% errors.forEach(function(err,index){%>
+                      <li><%= err.message %></li>
+                    <% }); %>
+                  </ul>
+                </div>
+            <%}%>
             <form action="/login" method="post">
                   <input type="hidden" name="_csrf" value=<%= req.csrfToken() %> />
                   <div class="form-group">

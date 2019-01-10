@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
 /* Get login page */
 router.get('/login', function(req, res, next){
-  res.render('login', { title: 'UjamaaWatch', req: req });
+  res.render('login', { title: 'UjamaaWatch', req: req, errors: null });
 });
 // Post login
 router.post('/login',function(req, res, next){

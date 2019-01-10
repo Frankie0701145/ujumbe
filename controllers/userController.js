@@ -9,26 +9,28 @@ module.exports.signup = function(req, res, next){
       }
       else{
           let user = userModel.findOne({email:req.body.email}, function(err, user){
-            console.log(err);
-            // making sure email is not already taken
-            if (user){
-                console.log(user);
-                res.render('signup',{title: 'UjamaaWatch', req: req, errors: [{message:"That email is already taken"}]});
-            }
-            else{
-                let params = signUpParams(req);
-                userModel.create(params, function(err, doc){
-                    if (err){
-                      let errors = []
-                      for(errName in err.errors){
-                        errors.push({message:err.errors[errName].message});
+            if(err){
+              console.log(err);
+            }else{
+              if (user){
+                  console.log(user);
+                  res.render('signup',{title: 'UjamaaWatch', req: req, errors: [{message:"That email is already taken"}]});
+              }
+              else{
+                  let params = signUpParams(req);
+                  userModel.create(params, function(err, doc){
+                      if (err){
+                        let errors = []
+                        for(errName in err.errors){
+                          errors.push({message:err.errors[errName].message});
+                        }
+                          res.render('signup',{title: 'UjamaaWatch', req: req, errors: errors});
                       }
-                        res.render('signup',{title: 'UjamaaWatch', req: req, errors: errors});
-                    }
-                    else{
-                      console.log("saved successfully");
-                    }
-                });
+                      else{
+                        console.log("saved successfully");
+                      }
+                  });
+              }
             }
           });
       }
@@ -39,7 +41,8 @@ function signUpParams(req){
   signUpParams = {
       email: req.body.email, firstName: req.body.firstName, lastName: req.body.lastName,
       phoneNumber: req.body.phoneNumber, password: req.body.password,
-      workAddress:req.body.workAddress
+      workAddress:req.body.workAddress,
+      homeAddress:req.body.homeAddress
    };
   return signUpParams;
 }

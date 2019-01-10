@@ -2,7 +2,7 @@
 const Geojson = require('mongoose-geojson-schema');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-
+const geocoder= require("../config/init/nodeGeocoderInit");
 const Schema = mongoose.Schema;
 
 const usersSchema =  new Schema({
@@ -38,7 +38,7 @@ const usersSchema =  new Schema({
       },
       coordinates: {
         type: [Number, Number],
-        required : [true, "The home address did not geocode properly try again later"],
+        // required : [true, "The home address did not geocode properly try again later"],
         index: '2dsphere'
       }
     },
@@ -49,7 +49,7 @@ const usersSchema =  new Schema({
       },
       coordinates: {
         type: [Number, Number],
-        required : [true, "The work address did not geocode properly try again later"],
+        // required : [true, "The work address did not geocode properly try again later"],
         index: '2dsphere'
       }
     },
@@ -60,22 +60,29 @@ const usersSchema =  new Schema({
 });
 
 usersSchema.pre('save', function(next){
-
+    const user = this;
     if(this.isModified("password")){
-      const user = this;
-      hashing(user, next);
+      bcrypt.hash(user.password, 10, function(err,hash){
+        if(err){
+          console.log(err);
+          return next(err);
+        }else{
+            user.password = hash;
+            next();
+        }
+      });
     }
-
 });
 
  // method to hash and takes the this obj and call back function
-function hashing(user, cb){
+function hashing(user){
   bcrypt.hash(user.password, 10, function(err, hash){
     if (err){
-      return cb(err);
+      console.log(err);
     }
+    console.log("Hashed password is");
+    console.log(hash);
     user.password = hash;
-    cb();
   });
 }
 

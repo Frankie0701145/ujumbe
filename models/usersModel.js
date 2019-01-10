@@ -2,7 +2,7 @@
 const Geojson = require('mongoose-geojson-schema');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const geocoder= require("../config/init/nodeGeocoderInit");
+const geocoder= require("../config/init/nodeGeocoderInit").geocoder;
 const Schema = mongoose.Schema;
 
 const usersSchema =  new Schema({
@@ -31,23 +31,23 @@ const usersSchema =  new Schema({
       type: String,
       required: [ true, 'The work address is required']
     },
-    homeCoordinates: {
+    homeCoordinate: {
       type:{
         type: String,
         default: 'Point',
       },
-      coordinates: {
-        type: [Number, Number],
+      coordinate: {
+        type: [Number, Number], //long, lat
         // required : [true, "The home address did not geocode properly try again later"],
         index: '2dsphere'
       }
     },
-    workCoordinates: {
+    workCoordinate: {
       type:{
         type: String,
         default: 'Point',
       },
-      coordinates: {
+      coordinate: {
         type: [Number, Number],
         // required : [true, "The work address did not geocode properly try again later"],
         index: '2dsphere'
@@ -58,31 +58,82 @@ const usersSchema =  new Schema({
       type: String
     }
 });
-
+//hashing the password
 usersSchema.pre('save', function(next){
-    const user = this;
+    var user = this;
     if(this.isModified("password")){
-      bcrypt.hash(user.password, 10, function(err,hash){
-        if(err){
-          console.log(err);
-          return next(err);
-        }else{
-            user.password = hash;
-            next();
-        }
-      });
-    }
+      console.log("************Hashin Hashing***********");
+      hashing(user, next);
+    }else{
+      next();
+    }  
 });
 
- // method to hash and takes the this obj and call back function
-function hashing(user){
+//home address geocoding
+usersSchema.pre('save', function(next){
+    var user = this;
+    if(this.isModified("homeAddress")){
+        geocoder.geocode(user.homeAddress, function(err,res){
+          if(err){
+            console.log(err);
+            return next(err);
+          }else{
+            if(res){
+              user.homeCoordinate.coordinate = [ res[0].longitude, res[0].latitude ];
+              console.log("************Home Geocoding***********");
+              console.log(res);
+              console.log(user.homeCoordinate.coordinate);
+              next();
+            }else{
+              console.log("Home location could not be found");
+              next();
+            }
+          }
+        });
+    }else{
+      next();
+    }
+
+});
+//work address geocoding
+usersSchema.pre('save', function(next){
+    var user = this;
+    if(this.isModified("workAddress")){
+        geocoder.geocode(user.workAddress, function(err,res){
+          if(err){
+            console.log(err);
+            return next(err);
+          }else{
+            if(res){
+              user.workCoordinate.coordinate = [ res[0].longitude, res[0].latitude ];
+              console.log("************Work Geocoding***********");
+              console.log(res);
+              console.log(user.workCoordinate.coordinate);
+              next();
+            }else{
+              console.log("Work location could not be found");
+              next();
+            }
+          }
+        });
+    }else{
+      next();
+    }
+
+});
+
+
+// method to hash and takes the this obj and call back function
+function hashing(user, cb){
   bcrypt.hash(user.password, 10, function(err, hash){
     if (err){
       console.log(err);
+      return cb(err);
     }
-    console.log("Hashed password is");
-    console.log(hash);
     user.password = hash;
+    console.log("Hashed Hashed");
+    console.log(user.password);
+    cb();
   });
 }
 

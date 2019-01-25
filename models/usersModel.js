@@ -66,7 +66,7 @@ usersSchema.pre('save', function(next){
       hashing(user, next);
     }else{
       next();
-    }  
+    }
 });
 
 //home address geocoding
@@ -122,6 +122,11 @@ usersSchema.pre('save', function(next){
 
 });
 
+//method to compare the password and the submitted password
+usersSchema.methods.validatePassword = function(password){
+      console.log("validating password");
+      return bcrypt.compareSync(password, this.password);
+};
 
 // method to hash and takes the this obj and call back function
 function hashing(user, cb){

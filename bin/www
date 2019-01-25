@@ -35,7 +35,7 @@
   mongoose.Promise = global.Promise;
 
   // connect to extenal database of mongoDb hosted in mlab
-  mongoose.connect(config.get("Mlab.mongoDBURI"),{useNewUrlParser: true}).then(
+  mongoose.connect(config.get("Mlab.mongoDBURI"),{useNewUrlParser: true,useCreateIndex: true}).then(
     function(){
       console.log('connection to mongoDB is okay');
     }
@@ -44,7 +44,7 @@
       console.log(err);
     }
   );
-  
+
   /**
    * Normalize a port into a number, string, or false.
    */

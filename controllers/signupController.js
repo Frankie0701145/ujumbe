@@ -1,4 +1,3 @@
-const User = require("../models/usersModel");
 const userModel = require('../models/usersModel');
 
 //returns the params that are required
@@ -13,7 +12,7 @@ function signUpParams(req){
 }
 
 //signup controller
-module.exports.signup = function(req, res, next){
+module.exports = function(req, res, next){
       // make sure the password and password confirmation do match
       if(req.body.password !== req.body.passwordConfirmation){
         res.render('signup',{title: 'UjamaaWatch', req: req, errors: [{message:"Password and Confirmation Password don't match"}]});
@@ -22,6 +21,7 @@ module.exports.signup = function(req, res, next){
           let user = userModel.findOne({email:req.body.email}, function(err, user){
             if(err){
               console.log(err);
+              return next(err);
             }else{
               if (user){
                   console.log(user);

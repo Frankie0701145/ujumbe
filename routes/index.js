@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const signup = require("../controllers/userController").signup;
+const signup = require("../controllers/signupController");
+const forgotPassword = require("../controllers/forgotPasswordController");
 const passport = require("passport");
 
 
@@ -26,5 +27,10 @@ router.get('/signup', function(req, res, next){
 });
 // Post signup
 router.post( '/signup', signup);
-
+//forgot password page
+router.get("/forgotPassword", function(req, res, next){
+    res.render('forgotPassword', {title: 'UjamaaWatch', req: req, errors: req.flash("err")});
+});
+//forgot password post page
+router.post("/forgotPassword", forgotPassword);
 module.exports = router;

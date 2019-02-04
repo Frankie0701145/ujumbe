@@ -1,8 +1,10 @@
+//controller to signup the s
+
 const userModel = require('../models/usersModel');
 
 //returns the params that are required
 function signUpParams(req){
-  signUpParams = {
+  let signUpParams = {
       email: req.body.email, firstName: req.body.firstName, lastName: req.body.lastName,
       phoneNumber: req.body.phoneNumber, password: req.body.password,
       workAddress:req.body.workAddress,
@@ -23,13 +25,16 @@ module.exports = function(req, res, next){
               console.log(err);
               return next(err);
             }else{
+              //make sure there is no user with that email
               if (user){
                   console.log(user);
                   res.render('signup',{title: 'UjamaaWatch', req: req, errors: [{message:"That email is already taken"}]});
               }
+              //continue if there is no use with that email
               else{
                   let params = signUpParams(req);
                   userModel.create(params, function(err, doc){
+                      //if there is no error in signing up the user
                       if (err){
                         console.log(err);
                         let errors = []
@@ -38,6 +43,7 @@ module.exports = function(req, res, next){
                         }
                           res.render('signup',{title: 'UjamaaWatch', req: req, errors: errors});
                       }
+                      //if not
                       else{
                         console.log("saved successfully");
                       }

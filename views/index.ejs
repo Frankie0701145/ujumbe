@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
+  <%- include ./partials/head.ejs %>
   <body>
-    <h1><%= title %></h1>
+    <%- include ./partials/navBar %>
+    <div class="container-fluid justify-content-center">
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <%- include ./partials/flashMessage.ejs %>
+          </div>  
+        </div>
+
+    </div>
     <p>Welcome to <%= title %></p>
   </body>
 </html>

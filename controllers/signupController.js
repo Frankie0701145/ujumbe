@@ -45,7 +45,10 @@ module.exports = function(req, res, next){
                       }
                       //if not
                       else{
-                        console.log("saved successfully");
+                        req.login(user, function(err){
+                          req.flash("success","Signed up successfully");
+                          res.redirect("/");
+                        });
                       }
                   });
               }

@@ -7,7 +7,7 @@ const resetPassword = require("../controllers/resetPasswordController");
 const changePassword = require("../controllers/changePasswordController");
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'UjamaaWatch', errors: req.flash("err"), successMessages: req.flash("success")});
+  res.render('index', { title: 'UjamaaWatch', errors: req.flash("err"), successMessages: req.flash("success"), req: req});
 });
 
 /* Get login page */
@@ -20,6 +20,11 @@ router.get('/login', function(req, res, next){
 // Post login
 router.post('/login',passport.authenticate('local',{successRedirect: "/",failureRedirect: "/login", failureFlash: true}));
 
+//logout endpoint
+router.get("/logout", function(req, res, next){
+   req.logout();
+   res.redirect('/');
+});
 // Get sign up page
 router.get('/signup', function(req, res, next){
     res.render('signup', {title: 'UjamaaWatch', req: req, errors: null});

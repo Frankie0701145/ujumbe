@@ -1,6 +1,7 @@
 //controller to signup the s
 
 const userModel = require('../models/usersModel');
+const sendActivationEmail =  require("../helpers/sendActivationEmail");
 
 //returns the params that are required
 function signUpParams(req){
@@ -45,14 +46,20 @@ module.exports = function(req, res, next){
                       }
                       //if not
                       else{
-                        req.login(user, function(err){
-                          if(err){
-                            console.log(err);
-                          }else{
-                            req.flash("success","Signed up successfully");
-                            res.redirect("/");
-                          }
-
+                        sendActivationEmail(user, req, function(err, json){
+                            if(err){
+                              console.log(err);
+                            }else{
+                              req.login(user, function(err){
+                                if(err){
+                                  console.log(err);
+                                }else{
+                                  console.log("Activation email sent");
+                                  req.flash("success",`Activation Link has been sent to your this email ${user.email}`);
+                                  res.redirect("/");
+                                }
+                              });
+                            }
                         });
                       }
                   });

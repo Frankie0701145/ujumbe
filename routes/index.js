@@ -35,10 +35,12 @@ router.get('/signup', function(req, res, next){
 router.post( '/signup', signup);
 
 //activation page
-router.get("/activateAccount", function(req, res, next){
+router.get("/activate", function(req, res, next){
   console.log(req.user.email);
   res.render("activationAccount", {title: 'UjamaaWatch', req:req, errors: req.flash("err"), successMessages: req.flash("success")});
 });
+
+router.get("/activateAccount");
 
 //forgot password page
 router.get("/forgotPassword", function(req, res, next){

@@ -33,7 +33,7 @@ module.exports = function(req, res, next){
               //continue if there is no use with that email
               else{
                   let params = signUpParams(req);
-                  userModel.create(params, function(err, doc){
+                  userModel.create(params, function(err, user){
                       //if there is no error in signing up the user
                       if (err){
                         console.log(err);
@@ -46,8 +46,13 @@ module.exports = function(req, res, next){
                       //if not
                       else{
                         req.login(user, function(err){
-                          req.flash("success","Signed up successfully");
-                          res.redirect("/");
+                          if(err){
+                            console.log(err);
+                          }else{
+                            req.flash("success","Signed up successfully");
+                            res.redirect("/");
+                          }
+
                         });
                       }
                   });

@@ -5,8 +5,10 @@ const forgotPassword = require("../controllers/forgotPasswordController");
 const passport = require("passport");
 const resetPassword = require("../controllers/resetPasswordController");
 const changePassword = require("../controllers/changePasswordController");
+const activationCheck = require("../controllers/middlewares/activationCheck.js");
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', activationCheck ,function(req, res, next) {
   res.render('index', { title: 'UjamaaWatch', errors: req.flash("err"), successMessages: req.flash("success"), req: req});
 });
 
@@ -31,6 +33,13 @@ router.get('/signup', function(req, res, next){
 });
 // Post signup
 router.post( '/signup', signup);
+
+//activation page
+router.get("/activateAccount", function(req, res, next){
+  console.log(req.user.email);
+  res.render("activationAccount", {title: 'UjamaaWatch', req:req, errors: req.flash("err"), successMessages: req.flash("success")});
+});
+
 //forgot password page
 router.get("/forgotPassword", function(req, res, next){
     res.render('forgotPassword', {title: 'UjamaaWatch', req: req, errors: req.flash("err"), successMessages: req.flash("success")});

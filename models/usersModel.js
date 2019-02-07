@@ -56,6 +56,10 @@ const usersSchema =  new Schema({
     password: {
       required: [true, "The password is required"],
       type: String
+    },
+    activated: {
+      type: Boolean,
+      default: false
     }
 });
 //hashing the password

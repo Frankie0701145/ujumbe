@@ -8,6 +8,8 @@ const changePassword = require("../controllers/changePasswordController");
 const activateAccount = require("../controllers/activateAccountController");
 const activationCheck = require("../controllers/middlewares/activationCheck");
 const isAuthenticatedCheck = require("../controllers/middlewares/isAuthenticatedCheck");
+const resendActivationEmail = require("../controllers/resendActivationEmailController");
+
 
 /* GET home page. */
 router.get('/', activationCheck ,function(req, res, next) {
@@ -41,9 +43,10 @@ router.get("/activate", isAuthenticatedCheck, function(req, res, next){
   console.log(req.user.email);
   res.render("activationAccount", {title: 'UjamaaWatch', req:req, errors: req.flash("err"), successMessages: req.flash("success"), errActivation: req.flash("errActivation")});
 });
-
+//activation end point
 router.get("/activateAccount/:accesstoken", activateAccount);
-
+//activation resend email endpoint
+router.get("/resendActivationEmail", resendActivationEmail);
 //forgot password page
 router.get("/forgotPassword", function(req, res, next){
     res.render('forgotPassword', {title: 'UjamaaWatch', req: req, errors: req.flash("err"), successMessages: req.flash("success")});

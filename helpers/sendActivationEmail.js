@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 module.exports =  function(user, req, cb){
 
   sgMail.setApiKey("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");
-  let accesstoken = jwt.sign({id: user.id}, "secret", {expiresIn: '1h'});
+  let accesstoken = jwt.sign({id: user.id}, "secret", {expiresIn: '3days'});
 
   let link = `${req.headers.host}/activateAccount/${accesstoken}`;
   const msg = {

@@ -5,7 +5,9 @@ const forgotPassword = require("../controllers/forgotPasswordController");
 const passport = require("passport");
 const resetPassword = require("../controllers/resetPasswordController");
 const changePassword = require("../controllers/changePasswordController");
-const activationCheck = require("../controllers/middlewares/activationCheck.js");
+const activateAccount = require("../controllers/activateAccountController");
+const activationCheck = require("../controllers/middlewares/activationCheck");
+const isAuthenticatedCheck = require("../controllers/middlewares/isAuthenticatedCheck");
 
 /* GET home page. */
 router.get('/', activationCheck ,function(req, res, next) {
@@ -32,15 +34,15 @@ router.get('/signup', function(req, res, next){
     res.render('signup', {title: 'UjamaaWatch', req: req, errors: null});
 });
 // Post signup
-router.post( '/signup', signup);
+router.post('/signup', signup);
 
 //activation page
-router.get("/activate", function(req, res, next){
+router.get("/activate", isAuthenticatedCheck, function(req, res, next){
   console.log(req.user.email);
-  res.render("activationAccount", {title: 'UjamaaWatch', req:req, errors: req.flash("err"), successMessages: req.flash("success")});
+  res.render("activationAccount", {title: 'UjamaaWatch', req:req, errors: req.flash("err"), successMessages: req.flash("success"), errActivation: req.flash("errActivation")});
 });
 
-router.get("/activateAccount");
+router.get("/activateAccount/:accesstoken", activateAccount);
 
 //forgot password page
 router.get("/forgotPassword", function(req, res, next){

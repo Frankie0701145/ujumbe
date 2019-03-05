@@ -37,7 +37,7 @@ const usersSchema =  new Schema({
         default: 'Point',
       },
       coordinate: {
-        type: [Number, Number], //long, lat
+        type: [Number, Number], //lon, lat
         // required : [true, "The home address did not geocode properly try again later"],
         index: '2dsphere'
       }
@@ -48,7 +48,7 @@ const usersSchema =  new Schema({
         default: 'Point',
       },
       coordinate: {
-        type: [Number, Number],
+        type: [Number, Number], //lon, lat
         // required : [true, "The work address did not geocode properly try again later"],
         index: '2dsphere'
       }
@@ -61,7 +61,7 @@ const usersSchema =  new Schema({
       type: Boolean,
       default: false
     }
-});
+},{timestamps: true});
 //hashing the password
 usersSchema.pre('save', function(next){
     var user = this;

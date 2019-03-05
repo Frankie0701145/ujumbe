@@ -20,9 +20,9 @@ module.exports =  function(user, req, cb){
     ,		//content
     html: ` <html>
             <h2> Dear ${user.firstName}</h2>
-            <h3>Password Reset </h3>
+            <h3>Account Activation for Your UjamaaWatch Account </h3>
             <body>
-              <p>To reset the password click on the link below. If you did not request for a password reset don\'t worry just ignore the link.</p>
+              <p>To activate account click on the link below. If you did not register in UjamaaWatch ignore the link below.</p>
               <a href= "${link}">${link}</a>
             </body>
             </html>

@@ -7,6 +7,7 @@
       <div class="row mt-4 pt-5">
         <div class="col-7 mx-auto border border-white shadow-lg p-4 bg-white rounded mt-4">
           <h3 class="text-center">Activate Account</h3>
+          <%- include ./partials/flashMessage.ejs %>
           <p>Activate the Account by clicking the link sent to this email: <span class="font-italic"><%=req.user.email%></span></p>
           <p>If you did not receive the activation link or the link that was sent previously to your email did not activate our account please resend the link.</p>
           <p>To resend the activation link, click the button below. </p>

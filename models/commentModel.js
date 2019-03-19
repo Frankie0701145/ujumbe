@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // comment schema
-  const commentsSchema = new Schema ({
+  const commentSchema = new Schema ({
       userId: {
          type:String,
          required: true
@@ -26,5 +26,5 @@ const Schema = mongoose.Schema;
  );
 
 
-const Comments = mongoose.model("comments". commentsSchems);
-module.exports = Comments;
+const Comment = mongoose.model("Comment". commentSchems);
+module.exports = Comment;

@@ -1,7 +1,7 @@
 //Controller to fire the check the return reset link is valid
 
 const jwt = require("jsonwebtoken");
-const userModel = require('../models/usersModel');
+const userModel = require('../models/userModel');
 
 module.exports =  function(req, res, next){
   let token = req.params.accesstoken

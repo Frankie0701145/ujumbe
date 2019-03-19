@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const geocoder= require("../config/init/nodeGeocoderInit").geocoder;
 const Schema = mongoose.Schema;
 
-const usersSchema =  new Schema({
+const userSchema =  new Schema({
     firstName: {
       type: String,
       required: [true, 'The first name is required']
@@ -60,10 +60,11 @@ const usersSchema =  new Schema({
     activated: {
       type: Boolean,
       default: false
-    }
+    },
+    news: [{type: Schema.Types.ObjectId, ref: 'News'}],
 },{timestamps: true});
 //hashing the password
-usersSchema.pre('save', function(next){
+userSchema.pre('save', function(next){
     var user = this;
     if(this.isModified("password")){
       console.log("************Hashin Hashing***********");
@@ -74,7 +75,7 @@ usersSchema.pre('save', function(next){
 });
 
 //home address geocoding
-usersSchema.pre('save', function(next){
+userSchema.pre('save', function(next){
     var user = this;
     if(this.isModified("homeAddress")){
         geocoder.geocode(user.homeAddress, function(err,res){
@@ -100,7 +101,7 @@ usersSchema.pre('save', function(next){
 
 });
 //work address geocoding
-usersSchema.pre('save', function(next){
+userSchema.pre('save', function(next){
     var user = this;
     if(this.isModified("workAddress")){
         geocoder.geocode(user.workAddress, function(err,res){
@@ -127,7 +128,7 @@ usersSchema.pre('save', function(next){
 });
 
 //method to compare the password and the submitted password
-usersSchema.methods.validatePassword = function(password){
+userSchema.methods.validatePassword = function(password){
       console.log("validating password");
       return bcrypt.compareSync(password, this.password);
 };
@@ -146,6 +147,6 @@ function hashing(user, cb){
   });
 }
 
-const User = mongoose.model('users', usersSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

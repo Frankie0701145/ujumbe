@@ -7,18 +7,18 @@ const Schema = mongoose.Schema;
 
 // news schema
   const newsSchema = new Schema ({
+          title:{
+            type: String,
+            required: true
+          },
           text: {
             type: String,
             required: true
           },
-          userId: {
-            type: String,
-            required: true
-          },
-          likes: {
+          agree: {
             type: Number
           },
-          dislikes: {
+          disagree: {
             type: Number
           },
           commentNo: {
@@ -40,10 +40,14 @@ const Schema = mongoose.Schema;
               // required : [true, "The work address did not geocode properly try again later"],
               index: '2dsphere'
             }
-          }
+          },
+          comment:[{
+            type: Schema.Types.ObjectId, ref: "Comment"
+          }],
+          user:[{type: Schema.Types.ObjectId, ref: 'User'}]
       },
       {timestamps: true}
    );
 
-const News = mongoose.model("news", newsSchema);
+const News = mongoose.model("News", newsSchema);
 module.exports = News;

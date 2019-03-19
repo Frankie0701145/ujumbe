@@ -9,18 +9,25 @@ const activateAccount = require("../controllers/activateAccountController");
 const activationCheck = require("../controllers/middlewares/activationCheck");
 const isAuthenticatedCheck = require("../controllers/middlewares/isAuthenticatedCheck");
 const resendActivationEmail = require("../controllers/resendActivationEmailController");
-
-
+const locationNews  = require("../controllers/locationNewsController");
+const generateNews = require("../controllers/generateNewsController");
 /* GET home page. */
-router.get('/', activationCheck ,function(req, res, next) {
-  res.render('index', { title: 'UjamaaWatch', errors: req.flash("err"), successMessages: req.flash("success"), req: req});
+router.get('/',isAuthenticatedCheck, activationCheck ,function(req, res, next) {
+  user = req.user;
+  locationsDetails = [
+    {locationName: req.user.homeAddress,  lon: req.user.homeCoordinate.coordinate[0], lat: req.user.homeCoordinate.coordinate[1] },
+    {locationName: req.user.workAddress, lon: req.user.workCoordinate.coordinate[0], lat: req.user.workCoordinate.coordinate[1]}
+  ];
+  // locationsDetails = [req.user.homeAddress, req.user.homeAddress];
+  res.render('index', { title: 'UjamaaWatch', errors: req.flash("err"), successMessages: req.flash("success"), req: req, locationsDetails: locationsDetails});
 });
+
+router.get("/locationNews", isAuthenticatedCheck, activationCheck, locationNews);
 
 /* Get login page */
 router.get('/login', function(req, res, next){
   // console.log(req.flash("err"));
   res.render('login', { title: 'UjamaaWatch', req: req, errors: req.flash("err"), successMessages: req.flash("success")});
-
 });
 
 // Post login
@@ -60,6 +67,8 @@ router.get("/resetPassword/:accesstoken", resetPassword);
 //change password end point
 router.post("/resetPassword", changePassword );
 
+//route to generate news
+router.get("/generateNews", generateNews);
 
 
 module.exports = router;

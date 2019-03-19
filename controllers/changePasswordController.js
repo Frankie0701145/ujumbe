@@ -1,4 +1,4 @@
-const userModel = require('../models/usersModel');
+const userModel = require('../models/userModel');
 
 function changePasswordParams(req){
     let changePasswordParams = {

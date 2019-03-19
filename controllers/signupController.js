@@ -1,6 +1,6 @@
 //controller to signup the s
 
-const userModel = require('../models/usersModel');
+const userModel = require('../models/userModel');
 const sendActivationEmail =  require("../helpers/sendActivationEmail");
 
 //returns the params that are required

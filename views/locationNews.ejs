@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <%- include ./partials/head.ejs %>
+  <body>
+    <%- include ./partials/navBar %>
+    <!--Flash Div  -->
+    <div class="container-fluid justify-content-center">
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <%- include ./partials/flashMessage.ejs %>
+          </div>
+        </div>
+    </div>
+    <!-- Main body DIv -->
+    <div class="container">
+      <div class="row mt-4">
+            <!--locations-->
+            <div class="col-2 border mr-2 shadow p-3 mb-5 bg-white rounded">
+              <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <h3>Locations</h3>
+                <hr>
+                <% if(locationsDetails => 0 ){%>
+                  <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">All</a>
+                  <%  locationsDetails.forEach(function(locationDetail, index){%>
+                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="/locationNews/?lat=<%=locationDetail.lat%>&lon=<%=locationDetail.lon%>"
+                      role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                      <%=locationDetail.locationName%>
+                    </a>
+                  <%});%>
+                <%}else{%>
+                  <span class="font-italic pb-2">Add Locations to get News </span>
+                <%}%>
+                <button href="#" class="btn btn-light">Add location</button>
+              </div>
+            </div>
+
+            <!-- #the window with the news -->
+            <div class="col-6 border mr-2 shadow p-3 mb-5 bg-white rounded" id="newsWrapper">
+                <%if(news.length > 0){%>
+                  <% news.forEach(function(n, index){%>
+                        <div class="row">
+                              <!--showing the user name  -->
+                              <div class="col-12 mt-2">
+                                <!-- the name of the user -->
+                                  <img src="#" alt="..." class="img-thumbnail rounded-circle">
+                                  <span class=""><%= n.user[0].firstName%> <%= n.user[0].lastName%></span>
+                                  <span class="float-right"><%= moment(n.createdAt).fromNow()%></span>
+                              </div>
+                              <!--showint the title -->
+                              <div class="col-12 mt-2">
+                                <div class="row justify-content-center">
+                                  <span class="font-weight-bold"><%= n.title%></span>
+                                </div>
+                              </div>
+                              <!--the text of the news  -->
+                              <div class="col-12 mt-2">
+                                  <div class="text-monospace">
+                                    <%= n.text%>
+                                  </div>
+                              </div>
+                        </div>
+                        <hr>
+                  <%})%>
+                  <input type="hidden" value="0" id="pageNo">
+                <%}else{%>
+                  <div class="row justify-content-center">
+                    <h3 class="font-italic">There is no News.</h3>
+                  </div>
+                <%}%>
+            </div>
+
+            <!-- #the window with the adverts -->
+            <div class="col-3 border mr-2 shadow p-3 mb-5 bg-white rounded">
+                <!-- #adds window -->
+            </div>
+      </div>
+
+    </div>
+  </body>
+
+  <script>
+        $(window).scroll(function(){
+            var scrollTop = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+
+            if( scrollTop + windowHeight >  documentHeight-1 ){
+               var pageNo = $("#pageNo").val();
+               var currentLocationCoord = <%- JSON.stringify(currentLocationCoord)%>;
+               currentLocationCoord["pageNo"] = pageNo;
+
+               $.getJSON("/locationNews", currentLocationCoord, function(data, status, xhr){
+                 $.each(data, function(key, val){
+                    var name = val.user[0].firstName + " " + val.user[0].lastName;
+                    var title = val.title;
+                    var text = val.text;
+                    var dateDiff = moment(val.createdAt).fromNow();
+                    console.log(dateDiff);
+                    var html = '<div class="row">\
+                          <!--showing the user name  -->\
+                          <div class="col-12 mt-2">\
+                                <!-- the name of the user -->\
+                                <img src="#" alt="..." class="img-thumbnail rounded-circle">\
+                                <span class="">'+ name +'</span>\
+                                <span class="float-right">' + dateDiff + '</span>\
+                          </div>\
+                          <!--showing the title -->\
+                          <div class="col-12 mt-2">\
+                            <div class="row justify-content-center">\
+                              <span class="font-weight-bold">'+ title +'</span>\
+                            </div>\
+                          </div>\
+                          <!--the text of the news  -->\
+                          <div class="col-12 mt-2">\
+                              <div class="text-monospace">\
+                                '+ text +'\
+                              </div>\
+                          </div>\
+                    </div>\
+                    <hr>';
+                    $("#newsWrapper").append(html);
+                 });
+                 $("#pageNo").val(parseInt(pageNo)+1);
+                 console.log($("#pageNo").val());
+               }).fail(function(){
+                 console.log("failed");
+               });
+            }
+        });
+  </script>
+</html>

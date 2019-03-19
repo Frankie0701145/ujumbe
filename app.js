@@ -9,6 +9,8 @@ const flash = require("connect-flash");
 const LocalStrategyPassport = require("./config/init/localStrategyPassport");
 const passport = require('passport');
 const indexRouter = require('./routes/index');
+const moment =  require('moment');
+
 
 const app = express();
 const options = {
@@ -38,7 +40,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(indexRouter);
 
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -54,5 +55,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+//my locals
+app.locals.moment = moment;
 
 module.exports = app;

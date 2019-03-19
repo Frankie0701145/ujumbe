@@ -84,7 +84,7 @@
             var windowHeight = $(window).height();
             var documentHeight = $(document).height();
 
-            if( scrollTop + windowHeight >  documentHeight-1 ){
+            if( scrollTop + windowHeight >  documentHeight-0.2){
                var pageNo = $("#pageNo").val();
                var currentLocationCoord = <%- JSON.stringify(currentLocationCoord)%>;
                currentLocationCoord["pageNo"] = pageNo;

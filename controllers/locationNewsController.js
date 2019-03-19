@@ -11,7 +11,7 @@ module.exports = function(req, res, next){
                 "coordinates.coordinate":{
                   "$geoWithin": {"$centerSphere":[[req.query.lon, req.query.lat], 0.3/3963.2]}
                 }
-          }).populate('user', "firstName lastName").sort({createdAt: "ascending"}).limit(perpage).exec(function(err, news){
+          }).populate('user', "firstName lastName").sort({createdAt: "descending"}).limit(perpage).exec(function(err, news){
             if(err){
               console.log(err);
               return err
@@ -36,13 +36,17 @@ module.exports = function(req, res, next){
           "coordinates.coordinate":{
             "$geoWithin": {"$centerSphere":[[req.query.lon, req.query.lat], 0.3/3963.2]}
           }
-        }).populate('user', "firstName lastName").limit(perpage).skip(perpage*pageNo).exec(function(err, news){
+        }).populate('user', "firstName lastName").sort({createdAt: "descending"}).limit(perpage).skip(perpage*pageNo).exec(function(err, news){
           if(err){
             console.log(err);
             res.json(500,err);
           }else{
-              console.log(news[0].createdAt);
-              res.json(news);
+              if(news.length > 1){
+                console.log(news.length);
+                res.json(news);
+              }else{
+
+              }
           }
         });
       }

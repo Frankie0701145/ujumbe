@@ -43,7 +43,7 @@
                               <div class="col-12 mt-2">
                                 <!-- the name of the user -->
                                   <img src="#" alt="..." class="img-thumbnail rounded-circle">
-                                  <span class=""><%= n.user[0].firstName%> <%= n.user[0].lastName%></span>
+                                  <span class=""><%= n.user.firstName%> <%= n.user.lastName%></span>
                                   <span class="float-right"><%= moment(n.createdAt).fromNow()%></span>
                               </div>
                               <!--showint the title -->
@@ -54,7 +54,7 @@
                               </div>
                               <!--the text of the news  -->
                               <div class="col-12 mt-2">
-                                  <div class="text-monospace">
+                                  <div>
                                     <%= n.text%>
                                   </div>
                               </div>
@@ -99,6 +99,7 @@
       </div>
 
     </div>
+    <%- include ./partials/loadNews%>
   </body>
-  <script src="/javascripts/loadNews" charset="utf-8"></script>
+
 </html>

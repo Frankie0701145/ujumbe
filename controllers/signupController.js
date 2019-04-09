@@ -18,7 +18,7 @@ function signUpParams(req){
 module.exports = function(req, res, next){
       // make sure the password and password confirmation do match
       if(req.body.password !== req.body.passwordConfirmation){
-        res.render('signup',{title: 'UjamaaWatch', req: req, errors: [{message:"Password and Confirmation Password don't match"}]});
+        res.render('signup',{title: "Ujumbe", req: req, errors: [{message:"Password and Confirmation Password don't match"}]});
       }
       else{
           let user = userModel.findOne({email:req.body.email}, function(err, user){
@@ -29,7 +29,7 @@ module.exports = function(req, res, next){
               //make sure there is no user with that email
               if (user){
                   console.log(user);
-                  res.render('signup',{title: 'UjamaaWatch', req: req, errors: [{message:"That email is already taken"}]});
+                  res.render('signup',{title: "Ujumbe", req: req, errors: [{message:"That email is already taken"}]});
               }
               //continue if there is no use with that email
               else{
@@ -42,7 +42,7 @@ module.exports = function(req, res, next){
                         for(errName in err.errors){
                           errors.push({message:err.errors[errName].message});
                         }
-                          res.render('signup',{title: 'UjamaaWatch', req: req, errors: errors});
+                          res.render('signup',{title: "Ujumbe", req: req, errors: errors});
                       }
                       //if not
                       else{

@@ -29,7 +29,7 @@ module.exports =  function(req, res, next){
           if(err){
             console.log(err);
           }else{
-            res.render("resetPassword",{title: 'UjamaaWatch', req: req,email: user.email, errors: req.flash("err"), successMessages: req.flash("success")});
+            res.render("resetPassword",{title: "Ujumbe", req: req,email: user.email, errors: req.flash("err"), successMessages: req.flash("success")});
           }
         });
       }

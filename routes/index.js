@@ -19,7 +19,7 @@ router.get('/',isAuthenticatedCheck, activationCheck ,function(req, res, next) {
     {locationName: req.user.workAddress, lon: req.user.workCoordinate.coordinate[0], lat: req.user.workCoordinate.coordinate[1]}
   ];
   // locationsDetails = [req.user.homeAddress, req.user.homeAddress];
-  res.render('index', { title: 'UjamaaWatch', errors: req.flash("err"), successMessages: req.flash("success"), req: req, locationsDetails: locationsDetails});
+  res.render('index', { title: "Ujumbe", errors: req.flash("err"), successMessages: req.flash("success"), req: req, locationsDetails: locationsDetails});
 });
 
 router.get("/locationNews", isAuthenticatedCheck, activationCheck, locationNews);
@@ -27,7 +27,7 @@ router.get("/locationNews", isAuthenticatedCheck, activationCheck, locationNews)
 /* Get login page */
 router.get('/login', function(req, res, next){
   // console.log(req.flash("err"));
-  res.render('login', { title: 'UjamaaWatch', req: req, errors: req.flash("err"), successMessages: req.flash("success")});
+  res.render('login', { title: "Ujumbe", req: req, errors: req.flash("err"), successMessages: req.flash("success")});
 });
 
 // Post login
@@ -40,7 +40,7 @@ router.get("/logout", function(req, res, next){
 });
 // Get sign up page
 router.get('/signup', function(req, res, next){
-    res.render('signup', {title: 'UjamaaWatch', req: req, errors: null});
+    res.render('signup', {title: "Ujumbe", req: req, errors: null});
 });
 // Post signup
 router.post('/signup', signup);
@@ -48,7 +48,7 @@ router.post('/signup', signup);
 //activation page
 router.get("/activate", isAuthenticatedCheck, function(req, res, next){
   console.log(req.user.email);
-  res.render("activationAccount", {title: 'UjamaaWatch', req:req, errors: req.flash("err"), successMessages: req.flash("success"), errActivation: req.flash("errActivation")});
+  res.render("activationAccount", {title: "Ujumbe", req:req, errors: req.flash("err"), successMessages: req.flash("success"), errActivation: req.flash("errActivation")});
 });
 //activation end point
 router.get("/activateAccount/:accesstoken", activateAccount);
@@ -56,7 +56,7 @@ router.get("/activateAccount/:accesstoken", activateAccount);
 router.get("/resendActivationEmail", resendActivationEmail);
 //forgot password page
 router.get("/forgotPassword", function(req, res, next){
-    res.render('forgotPassword', {title: 'UjamaaWatch', req: req, errors: req.flash("err"), successMessages: req.flash("success")});
+    res.render('forgotPassword', {title: "Ujumbe", req: req, errors: req.flash("err"), successMessages: req.flash("success")});
 });
 //forgot password post page
 router.post("/forgotPassword", forgotPassword);

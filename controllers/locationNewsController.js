@@ -22,7 +22,7 @@ module.exports = function(req, res, next){
                 {locationName: req.user.workAddress, lon: req.user.workCoordinate.coordinate[0], lat: req.user.workCoordinate.coordinate[1]}
               ];
               console.log(news.length);
-              res.render('locationNews', { title: 'UjamaaWatch', errors: req.flash("err"), successMessages: req.flash("success"),
+              res.render('locationNews', { title: "Ujumbe", errors: req.flash("err"), successMessages: req.flash("success"),
                           req: req, locationsDetails: locationsDetails, news: news, currentLocationCoord: currentLocationCoord
               });
             }

@@ -10,20 +10,20 @@ module.exports =  function(user, req, cb){
   let link = `${req.headers.host}/activateAccount/${accesstoken}`;
   const msg = {
     to: `${user.email}`,					//receiver's email
-    from: 'noreply@UjamaaWatch.com',			//sender's email
+    from: 'noreply@ujumbe.com',			//sender's email
     subject: 'Account Activation',				//Subject
     text: `
             Dear ${user.firstName}
-            Account Activation for Your UjamaaWatch Account
-            To activate account click on the link below. If you did not register in UjamaaWatch ignore the link below.
+            Account Activation for Your ujumbe Account
+            To activate account click on the link below. If you did not register in ujumbe ignore the link below.
             ${link}
           `
     ,		//content
     html: ` <html>
             <h2> Dear ${user.firstName}</h2>
-            <h3>Account Activation for Your UjamaaWatch Account </h3>
+            <h3>Account Activation for Your ujumbe Account </h3>
             <body>
-              <p>To activate account click on the link below. If you did not register in UjamaaWatch ignore the link below.</p>
+              <p>To activate account click on the link below. If you did not register in ujumbe ignore the link below.</p>
               <a href= "${link}">${link}</a>
             </body>
             </html>

@@ -1,5 +1,6 @@
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey("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");
+const config = require('config');
+sgMail.setApiKey(config.get("SendgridApi.key"));
 const msg = {
   to: 'test@example.com',					//receiver's email
   from: 'test@example.com',			//sender's email

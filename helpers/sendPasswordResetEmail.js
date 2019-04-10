@@ -1,12 +1,12 @@
 const sgMail = require('@sendgrid/mail');
 const jwt = require("jsonwebtoken");
-
+const config = requir('config');
 
 module.exports = function(user, req, cb){
 
       //setting up the
-      sgMail.setApiKey("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");
-      let accesstoken = jwt.sign({id: user.id}, "secret", {expiresIn: '1h'});
+      sgMail.setApiKey(config.get("SendgridApi.key"));
+      let accesstoken = jwt.sign({id: user.id}, config.get("jwt.key"), {expiresIn: '1h'});
 
       let link = `${req.headers.host}/resetPassword/${accesstoken}`;
       const msg = {

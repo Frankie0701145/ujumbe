@@ -1,10 +1,11 @@
 
 const jwt = require("jsonwebtoken");
 const userModel = require('../models/userModel');
+const config = require('config');
 
 module.exports =  function(req, res, next){
     let token = req.params.accesstoken
-    let secrete = "secret";
+    let secrete = config.get("Jwt.key");
 
     jwt.verify(token, secrete , function(err,decoded){
           //will rectify later

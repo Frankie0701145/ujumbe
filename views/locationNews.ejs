@@ -76,6 +76,7 @@
                                     <div class="col-4">
                                         <a href="#">
                                           <i class="far fa-comments fa-sm"></i>
+                                          <!--Comment button to load a modal that loads comments-->
                                           <span class="votingText">Comment</span>
                                         </a>
                                     </div>
@@ -100,7 +101,9 @@
 
     </div>
     <!-- partial that contains a script to load news when you reach at the end of the page -->
-    <%- include ./partials/loadNews%>
+    <%- include ./partials/loadNewsJavaScript%>
+    <!--partial that contains a script to load comments for a news and  opens a load a modal to display the comments -->
+    <%- include ./partials/commentJavaScript%>
   </body>
 
 </html>

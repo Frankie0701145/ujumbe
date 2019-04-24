@@ -1,6 +1,6 @@
 const sgMail = require('@sendgrid/mail');
 const jwt = require("jsonwebtoken");
-const config = requir('config');
+const config = require('config');
 
 module.exports = function(user, req, cb){
 

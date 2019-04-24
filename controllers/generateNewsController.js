@@ -8,7 +8,7 @@ module.exports =  function(req, res, next){
         text: faker.lorem.sentences(),
         address: faker.address.streetAddress(),
         coordinates:{coordinate: [36.0726294574634, -0.3021589]},
-        user: "5c7fc8518102622cbc823369"
+        user: "5cc070c0c41dbc378bcacee3"
 
       }
       News.create(news, function(err, doc){

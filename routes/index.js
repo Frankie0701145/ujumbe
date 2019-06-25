@@ -11,6 +11,8 @@ const isAuthenticatedCheck = require("../controllers/middlewares/isAuthenticated
 const resendActivationEmail = require("../controllers/resendActivationEmailController");
 const locationNews  = require("../controllers/locationNewsController");
 const generateNews = require("../controllers/generateNewsController");
+const loadComments = require("../controllers/loadNewsController");
+const generateComments = require("../controllers/generateCommentsController");
 /* GET home page. */
 router.get('/',isAuthenticatedCheck, activationCheck ,function(req, res, next) {
   user = req.user;
@@ -71,4 +73,8 @@ router.post("/resetPassword", changePassword );
 router.get("/generateNews", generateNews);
 
 
+//route to load comments based on the news
+router.get("/loadComment/:id", loadComments);
+//route to generate fake comments
+router.get("/generateComments", generateComments);
 module.exports = router;

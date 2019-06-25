@@ -41,7 +41,7 @@ const Schema = mongoose.Schema;
               index: '2dsphere'
             }
           },
-          comment:[{
+          comments:[{
             type: Schema.Types.ObjectId, ref: "Comment"
           }],
           user:{type: Schema.Types.ObjectId, ref: 'User'}

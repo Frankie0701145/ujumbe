@@ -1,3 +1,5 @@
+
+//imports
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -8,11 +10,18 @@ const logger = require('morgan');
 const flash = require("connect-flash");
 const LocalStrategyPassport = require("./config/init/localStrategyPassport");
 const passport = require('passport');
-const indexRouter = require('./routes/index');
 const moment =  require('moment');
 
-
+//routes
+const indexRouter = require('./routes/index').indexRouter;
+// const newsRouter = require('./routes/newsRoute');
+const sessionRouter = require('./routes/sessionRoute').sessionRouter;
+const userRouter = require('./routes/userRoute').userRouter;
+//end
+//insatiate the app
 const app = express();
+
+//define options used for the session cookie
 const options = {
     secret: 'key cat',
     cookie: { maxAge: 60000 },
@@ -20,25 +29,31 @@ const options = {
     saveUninitialized: true,
     cookie: {secure: false}
 };
+//insatiate the csurf middleware
 const csrfMiddleware = csurf({cookie: true });
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+//hooking the middlewares
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
 app.use(cookieParser());
 app.use(csrfMiddleware);
 app.use(session(options));
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
+//end
 
+//routes
 app.use(indexRouter);
+app.use(sessionRouter);
+app.use(userRouter);
+//end
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -55,6 +70,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 //my locals
 app.locals.moment = moment;
 

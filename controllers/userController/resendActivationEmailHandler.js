@@ -1,4 +1,4 @@
-    const sendActivationEmail =  require("../helpers/sendActivationEmail");
+    const sendActivationEmail =  require("../../helpers/sendActivationEmail");
 
     module.exports = function(req, res, next){
       let user = req.user;

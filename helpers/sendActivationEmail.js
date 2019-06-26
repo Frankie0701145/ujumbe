@@ -1,11 +1,10 @@
 const sgMail = require('@sendgrid/mail');
 const jwt = require("jsonwebtoken");;
-const config = require('config');
 
 module.exports =  function(user, req, cb){
 
-  sgMail.setApiKey(config.get("SendgridApi.key"));
-  let accesstoken = jwt.sign({id: user.id}, config.get("jwt.key"), {expiresIn: '3days'});
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  let accesstoken = jwt.sign({id: user.id}, process.env.JWT_KEY, {expiresIn: '3days'});
 
   let link = `${req.headers.host}/activateAccount/${accesstoken}`;
   const msg = {

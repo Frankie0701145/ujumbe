@@ -1,6 +1,6 @@
 //Controller to send the reset password link to the email provided
-const sendPasswordResetEmail =  require("../helpers/sendPasswordResetEmail");
-const userModel = require('../models/userModel');
+const sendPasswordResetEmail =  require("../../helpers/sendPasswordResetEmail");
+const userModel = require('../../models/userModel');
 
 module.exports = function(req, res, next){
       console.log("starting sending the reset email");

@@ -13,7 +13,8 @@ const passport = require('passport');
 const moment =  require('moment');
 
 //routes
-const indexRouter = require('./routes/index').indexRouter;
+const indexRouter = require('./routes/indexRoute').indexRouter;
+const locationNewsRouter = require('./routes/locationNewsRoute').locationNewsRouter;
 // const newsRouter = require('./routes/newsRoute');
 const sessionRouter = require('./routes/sessionRoute').sessionRouter;
 const userRouter = require('./routes/userRoute').userRouter;
@@ -49,8 +50,9 @@ app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 //end
 
-//routes
+//routers loading
 app.use(indexRouter);
+app.use(locationNewsRouter );
 app.use(sessionRouter);
 app.use(userRouter);
 //end

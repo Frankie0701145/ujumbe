@@ -1,13 +1,15 @@
 //controller to signup the s
 
-const userModel = require('../../models/userModel');
-const sendActivationEmail =  require("../../helpers/sendActivationEmail");
+const userModel = require('../models/userModel');
+const sendActivationEmail =  require("../helpers/sendActivationEmail");
 
 //returns the params that are required
 function signUpParams(req){
   let signUpParams = {
       email: req.body.email, firstName: req.body.firstName, lastName: req.body.lastName,
-      phoneNumber: req.body.phoneNumber, password: req.body.password
+      phoneNumber: req.body.phoneNumber, password: req.body.password,
+      workAddress:req.body.workAddress,
+      homeAddress:req.body.homeAddress
    };
   return signUpParams;
 }
@@ -40,8 +42,7 @@ module.exports = function(req, res, next){
                         for(errName in err.errors){
                           errors.push({message:err.errors[errName].message});
                         }
-                        //change to redirect later on
-                        res.render('signup',{title: "Ujumbe", req: req, errors: errors});
+                          res.render('signup',{title: "Ujumbe", req: req, errors: errors});
                       }
                       //if not
                       else{
@@ -54,7 +55,7 @@ module.exports = function(req, res, next){
                                   console.log(err);
                                 }else{
                                   console.log("Activation email sent");
-                                  req.flash("success",`Activation link has been sent to this email ${user.email}`);
+                                  req.flash("success",`Activation Link has been sent to your this email ${user.email}`);
                                   res.redirect("/");
                                 }
                               });

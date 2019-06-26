@@ -3,12 +3,12 @@
 /**
  * Module dependencies.
  */
-
+  require('dotenv').config();
   const app = require('../app');
   const debug = require('debug')('ujumbe:server');
   const http = require('http');
   const mongoose = require('mongoose');
-  const config = require('config');
+  
 
   /**
    * Get port from environment and store in Express.
@@ -35,7 +35,7 @@
   mongoose.Promise = global.Promise;
 
   // connect to extenal database of mongoDb hosted in mlab
-  mongoose.connect(config.get("Mlab.mongoDBURI"),{useNewUrlParser: true,useCreateIndex: true}).then(
+  mongoose.connect(process.env.MLAB_URL,{useNewUrlParser: true,useCreateIndex: true}).then(
     function(){
       console.log('connection to mongoDB is okay');
     }

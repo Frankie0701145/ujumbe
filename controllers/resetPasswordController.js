@@ -2,12 +2,12 @@
 
 const jwt = require("jsonwebtoken");
 const userModel = require('../models/userModel');
-const config = require('config');
+
 
 module.exports =  function(req, res, next){
   let token = req.params.accesstoken
   if(req.params.accesstoken){
-    let secrete = config.get("jwt.key");
+    let secrete = process.env.JWT_KEY;
     jwt.verify(token, secrete , function(err,decoded){
         if(err){
           switch(err.name){

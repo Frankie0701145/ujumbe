@@ -1,4 +1,4 @@
-const config = require('config');
+
 const NodeGeocoder = require('node-geocoder');
 
 

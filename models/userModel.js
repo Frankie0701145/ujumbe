@@ -60,17 +60,15 @@ userSchema.pre('save', function(next){
       next();
     }
 });
-
 //method to compare the password and the submitted password
 userSchema.methods.validatePassword = function(password){
       console.log("validating password");
       return bcrypt.compareSync(password, this.password);
 };
+userSchema.methods.geocode = (address, cb)=>{
+   geocoder.geocode(address,cb); //parameter of the cb is err, res
+};
 
-// userSchema.methods.geocode = (address)=>{
-//    geocoder.geocode(address, function(err, res))
-// };
-// method to hash and takes the this obj and call back function
 function hashing(user, cb){
   bcrypt.hash(user.password, 10, function(err, hash){
     if (err){

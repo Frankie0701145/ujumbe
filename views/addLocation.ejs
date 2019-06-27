@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <%- include ./partials/head.ejs %>
+  <body>
+      <%- include ./partials/navBar %>
+      <div class="container">
+        <div class="row mt-4 pt-5">
+              <div class="col-7 mx-auto border border-white shadow-lg p-4 bg-white rounded mt-4">
+                 <h3 class="text-center">Add Location</h3>
+                 <%- include ./partials/flashMessage.ejs %>
+                 <%if(locations>0){%>
+                    <%location.forEach(function(location){%>
+                        <span>location.address</span>
+                        <span>longitude:</span>
+                        <span>location.coordinate[0]</span>
+                        <span>location.coordinate[1]</span>
+                    <%})%>
+                 <%}else{%>
+                 <%}%>
+                 <form class="pt-4" action="/addLocation" method="post">
+                   <%- include ./partials/csrfToken.ejs%>
+                   <div class="form-group row">
+                      <label for="address" class="col-sm-2 col-form-label">Address:</label>
+                      <div class="col-sm-10">
+                        <input name="address" type="text" class="form-control" id="address" placeholder="Location, City, Country" required>
+                      </div>
+                   </div>
+                   <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                 </form>
+              </div>
+        </div>
+      </div>
+  </body>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAW_xLmEjX00dhxc2jqJf0rB_wio2FLjnM&libraries=places"></script>
+  <script>
+      new google.maps.places.Autocomplete(document.getElementById('address'));
+  </script>
+</html>

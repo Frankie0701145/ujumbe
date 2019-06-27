@@ -1,6 +1,7 @@
 //imports
 const express = require('express');
 const router = express.Router();
+const userModel = require('../models/userModel');
 
 //controllers
 const signupHandler = require("../controllers/userController/signupHandler");
@@ -9,9 +10,11 @@ const resendActivationEmailHandler = require("../controllers/userController/rese
 const forgotPasswordHandler = require("../controllers/userController/forgotPasswordHandler");
 const resetPasswordHandler = require("../controllers/userController/resetPasswordHandler");
 const changePasswordHandler = require("../controllers/userController/changePasswordHandler");
+const addLocationHandler = require("../controllers/userController/addLocationHandler");
 
 //middlewares
 const isAuthenticatedCheck = require("../controllers/middlewares/isAuthenticatedCheck");
+const activationCheck = require("../controllers/middlewares/activationCheck");
 
 // Get Sign up page
 //end point to get the signup page
@@ -56,5 +59,19 @@ router.get("/resetPassword/:accesstoken", resetPasswordHandler);
 //change password end point
 //end point to change the password
 router.post("/resetPassword", changePasswordHandler);
+
+//endPoint to server the page to load new location
+
+router.get('/addLocation',isAuthenticatedCheck,activationCheck, (req, res, next)=>{
+  userModel.findById(req.user.id,'locations').
+    then((locations)=>{
+      res.render('addLocation', {title: "Ujumbe", req: req, errors: req.flash("err"), successMessages: req.flash("success"), locations:locations});
+    }).catch((err)=>{
+      console.log(err);
+      res.send(err);
+    });
+});
+//endPoint to add a location
+router.post("/addLocation",isAuthenticatedCheck,activationCheck, addLocationHandler);
 
 module.exports.userRouter = router;

@@ -64,8 +64,9 @@ router.post("/resetPassword", changePasswordHandler);
 
 router.get('/addLocation',isAuthenticatedCheck,activationCheck, (req, res, next)=>{
   userModel.findById(req.user.id,'locations').
-    then((locations)=>{
-      res.render('addLocation', {title: "Ujumbe", req: req, errors: req.flash("err"), successMessages: req.flash("success"), locations:locations});
+    then((user)=>{
+      console.log(user.locations.length);
+      res.render('addLocation', {title: "Ujumbe", req: req, errors: req.flash("err"), successMessages: req.flash("success"), locations:user.locations});
     }).catch((err)=>{
       console.log(err);
       res.send(err);

@@ -5,19 +5,26 @@
       <%- include ./partials/navBar %>
       <div class="container">
         <div class="row mt-4 pt-5">
-              <div class="col-7 mx-auto border border-white shadow-lg p-4 bg-white rounded mt-4">
+              <div class="col-8 mx-auto border border-white shadow-lg p-4 bg-white rounded mt-4">
                  <h3 class="text-center">Add Location</h3>
                  <%- include ./partials/flashMessage.ejs %>
-                 <%if(locations>0){%>
-                    <%location.forEach(function(location){%>
-                        <span>location.address</span>
-                        <span>longitude:</span>
-                        <span>location.coordinate[0]</span>
-                        <span>location.coordinate[1]</span>
-                    <%})%>
-                 <%}else{%>
+                 <% if( locations.length > 0){%>
+                   <ul class="p-2">
+                     <%locations.forEach(function(location){%>
+                       <div class='pr-2 container border'>
+                         <div class="row p-1">
+                           <span class="col-4"> <%=location.address%> </span>
+                           <span class="col-1"> Lon: </span>
+                           <span class="col-2"> <%=location.coordinate.coordinate[0].toString().substring(0,6)%> </span>
+                           <span class="col-1"> Lat: </span>
+                           <span class="col-2"> <%=location.coordinate.coordinate[1].toString().substring(0,6)%></span>
+                           <a class="btn btn-success btn-sm" href="/locationEdit/<%=location.id%>">Edit</a>
+                         </div>
+                       </div>
+                     <%})%>
+                   </ul>
                  <%}%>
-                 <form class="pt-4" action="/addLocation" method="post">
+                 <form class="p-2" action="/addLocation" method="post">
                    <%- include ./partials/csrfToken.ejs%>
                    <div class="form-group row">
                       <label for="address" class="col-sm-2 col-form-label">Address:</label>

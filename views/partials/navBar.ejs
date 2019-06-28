@@ -19,13 +19,16 @@
                 </li>
             <%}else{%>
               <li class="nav-item">
-                <a href="#" class="nav-link"><%= req.user.firstName%> </a>
-              </li>
-              <li class="nav-item">
                 <a href="/allLocationNews" class="nav-link">News</a>
               </li>
               <li class="nav-item">
+                <a href="/addLocation" class="nav-link"> Add Location </a>
+              </li>
+              <li class="nav-item">
                 <a href="/logout" class="nav-link">Logout</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link"><%= req.user.firstName%> </a>
               </li>
             <%}%>
           </ul>

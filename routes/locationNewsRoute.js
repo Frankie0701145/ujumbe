@@ -27,15 +27,15 @@ router.get('/allLocationNews',isAuthenticatedCheck, activationCheck ,function(re
 });
 
 //shows news from specific location
-router.get("/locationNews", isAuthenticatedCheck, activationCheck, locationNews);
-
-
+router.get("/locationNews", isAuthenticatedCheck, activationCheck, locationNews)
 //route to generate news
 router.get("/generateNews", generateNews);
 
 
 //route to load comments based on the news
 router.get("/loadComment/:id", loadComments);
+
 //route to generate fake comments
 router.get("/generateComments", generateComments);
+
 module.exports.locationNewsRouter = router;

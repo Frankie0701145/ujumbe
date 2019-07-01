@@ -12,14 +12,10 @@ const LocalStrategyPassport = require("./config/init/localStrategyPassport");
 const passport = require('passport');
 const moment =  require('moment');
 
-//routes
-const indexRouter = require('./routes/indexRoute').indexRouter;
-const locationNewsRouter = require('./routes/locationNewsRoute').locationNewsRouter;
-// const newsRouter = require('./routes/newsRoute');
-const sessionRouter = require('./routes/sessionRoute').sessionRouter;
-const userRouter = require('./routes/userRoute').userRouter;
-//end
-//insatiate the app
+//router
+const routes = require('./routes/index.js');
+
+//instatiate the app
 const app = express();
 
 //define options used for the session cookie
@@ -30,6 +26,7 @@ const options = {
     saveUninitialized: true,
     cookie: {secure: false}
 };
+
 //insatiate the csurf middleware
 const csrfMiddleware = csurf({cookie: true });
 
@@ -50,11 +47,8 @@ app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 //end
 
-//routers loading
-app.use(indexRouter);
-app.use(locationNewsRouter );
-app.use(sessionRouter);
-app.use(userRouter);
+//routes
+app.use(routes);
 //end
 
 // catch 404 and forward to error handler

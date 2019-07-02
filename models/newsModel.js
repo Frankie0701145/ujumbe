@@ -9,11 +9,11 @@ const Schema = mongoose.Schema;
   const newsSchema = new Schema ({
           title:{
             type: String,
-            required: true
+            required: [true, "The title is required"]
           },
           text: {
             type: String,
-            required: true
+            required: [true, "The news body is required"]
           },
           agree: {
             type: Number
@@ -23,28 +23,27 @@ const Schema = mongoose.Schema;
           },
           commentNo: {
             type: Number,
-            required: true,
             default: 0
-          },
-          address: {
-            type: String,
-            required: [true, 'The address is required']
           },
           coordinates: {
             type:{
               type: String,
               default: 'Point',
             },
-            coordinate: {
+            coordinates: {
               type: [Number, Number],//lon, lat
-              // required : [true, "The work address did not geocode properly try again later"],
+              required : [true, "The news coordinates is required"],
               index: '2dsphere'
             }
           },
           comments:[{
             type: Schema.Types.ObjectId, ref: "Comment"
           }],
-          user:{type: Schema.Types.ObjectId, ref: 'User'}
+          user:{
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: [true, "The user id is required"]
+          }
       },
       {timestamps: true}
    );

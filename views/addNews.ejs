@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <%- include ./partials/head.ejs %>
+  <body>
+  <%- include ./partials/navBar %>
+  <div class="container">
+    <div class="row mt-4 pt-5">
+      <!--Flash Div  -->
+      <div class="col-8 mx-auto border border-white shadow-lg p-4 bg-white rounded mt-4">
+        <h3 class="text-center">Add Location</h3>
+        <%- include ./partials/flashMessage.ejs %>
+        <!--Form-->
+        <form action="/addNews" method="post">
+            <%- include ./partials/csrfToken.ejs%>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" class="form-control" id="title" placeholder="Title" name="title" required>
+            </div>
+            <div class="form-group">
+              <label for="text">News</label>
+              <textarea class="form-control" id="text" rows="3" name="text" required></textarea>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="location">Location</label>
+                <select class="form-control" id="location" name="location" required>
+                  <% if(locations.length>0){%>
+                    <%locations.forEach(function(location){%>
+                    <option value="<%=location.coordinate.coordinate[0]%>,<%=location.coordinate.coordinate[1]%>">
+                       <%=location.address%>
+                    </option>
+                    <%})%>
+                  <%}else{%>
+                    <option value="">No location Add</option>
+                  <%}%>
+                </select>
+              </div>
+              <div class="col-3 mt-4">
+                <a class="btn btn-success" href="/addLocation">Add location</a>
+              </div>
+            </div>
+            <button type="submit" class="mt-2 btn btn-primary btn-lg btn-block">Submit</button>
+        </form>
+    </div>
+  </div>
+  </body>
+</html>

@@ -14,7 +14,6 @@ const generateComments = require("../controllers/generateCommentsController");
 const isAuthenticatedCheck = require("../controllers/middlewares/isAuthenticatedCheck");
 const activationCheck = require("../controllers/middlewares/activationCheck");
 
-/* GET home page. */
 //shows all the news
 router.get('/allLocationNews',isAuthenticatedCheck, activationCheck ,function(req, res, next) {
   user = req.user;
@@ -27,7 +26,15 @@ router.get('/allLocationNews',isAuthenticatedCheck, activationCheck ,function(re
 });
 
 //shows news from specific location
-router.get("/locationNews", isAuthenticatedCheck, activationCheck, locationNews)
+router.get("/locationNews", isAuthenticatedCheck, activationCheck, locationNews);
+
+//route to display the addLocation page
+router.get("/addNews", isAuthenticatedCheck, activationCheck, (req, res, next)=>{
+    res.render('addNews',{ title: "Ujumbe", errors: req.flash("err"), successMessages: req.flash("success"), req: req, locations:req.user.locations});
+});
+
+
+
 //route to generate news
 router.get("/generateNews", generateNews);
 

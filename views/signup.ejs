@@ -12,15 +12,7 @@
 
               <div class="col-8 mx-auto border border-white shadow-lg p-4 bg-white rounded mt-4">
                   <h3 class="text-center">Sign Up</h3>
-                    <%if( errors ){%>
-                        <div class="row alert alert-danger" role="alert">
-                          <ul>
-                            <% errors.forEach(function(err,index){%>
-                              <li><%= err.message %></li>
-                            <% }); %>
-                          </ul>
-                        </div>
-                    <%}%>
+                  <%- include ./partials/validationError.ejs%>
                   <form action="/signup" method="post">
                         <%- include ./partials/csrfToken.ejs%>
                         <!-- Name -->
@@ -28,13 +20,13 @@
                     			<div class="col-xs-6 col-sm-6 col-md-6">
                     				<div class="form-group">
                               <label for="firstName">First Name.</label>
-                    					<input id="firstName" type="text" name="firstName" placeholder="First Name" class="form-control input-sm" required= true>
+                    					<input id="firstName" type="text" name="firstName" placeholder="First Name" class="form-control input-sm" required=true>
                     				</div>
                     			</div>
                     			<div class="col-xs-6 col-sm-6 col-md-6">
                     				<div class="form-group">
                               <label for="lastName">Last Name.</label>
-                    					<input id="lastName" type="text" name="lastName" placeholder="Last Name" class="form-control input-sm" required= true>
+                    					<input id="lastName" type="text" name="lastName" placeholder="Last Name" class="form-control input-sm" required=true>
                     				</div>
                     			</div>
                     		</div>
@@ -43,14 +35,14 @@
                           <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group">
                               <label for="email">Email address</label>
-                              <input id="email" name="email" type="email" class="form-control input-sm" placeholder="Email Address" required= true aria-describedby="emailHelp">
+                              <input id="email" name="email" type="email" class="form-control input-sm" placeholder="Email Address" aria-describedby="emailHelp" required=true>
                               <small id="emailHelp" class="form-text text-muted">We'll never share your email without our permission.</small>
                             </div>
                           </div>
                           <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group">
                               <label for="tel">Phone No.</label>
-                              <input id='tel' name="phoneNumber" type="tel" class="form-control input-sm" placeholder="0xxxxxxxxx" required= true aria-describedby="telHelp">
+                              <input id='tel' name="phoneNumber" type="tel" class="form-control input-sm" placeholder="0xxxxxxxxx" required= true aria-describedby="telHelp" required=true>
                               <small id="telHelp" class="form-text text-muted">We'll never share your telephone without our permission.</small>
                             </div>
                           </div>

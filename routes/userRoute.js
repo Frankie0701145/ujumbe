@@ -19,7 +19,7 @@ const activationCheck = require("../controllers/middlewares/activationCheck");
 // Get Sign up page
 //end point to get the signup page
 router.get('/signup', function(req, res, next){
-    res.render('signup', {title: "Ujumbe", req: req, errors: null});
+    res.render('signup', {title: "Ujumbe", req: req, validationErrors: null});
 });
 
 // Post Signup

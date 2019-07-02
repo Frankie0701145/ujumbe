@@ -1,0 +1,9 @@
+<%if( validationErrors ){%>
+    <div class="row alert alert-danger" role="alert">
+      <ul>
+        <% validationErrors.forEach(function(err,index){%>
+          <li><%= err.message %></li>
+        <% }); %>
+      </ul>
+    </div>
+<%}%>

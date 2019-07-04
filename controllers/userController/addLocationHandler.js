@@ -5,23 +5,20 @@ module.exports = (req, res, next)=>{
   userModel.findById(req.user.id).then((user)=>{
        user.geocode(req.body.address, (err, result)=>{
          if(err){
-           console.log("error at geocoding");
-           console.log(err);
+           next(err);
          }else{
-           console.log("geocoded");
-           console.log(result);
            if(result && result.length > 0){
-             console.log(req.body.address);
+             // console.log(req.body.address);
              user.locations.push({
                address: req.body.address,
                coordinate: {
                  coordinate: [result[0].longitude, result[0].latitude]
                }
              });
-             console.log(user.locations);
+             // console.log(user.locations);
              user.save((err)=>{
                if(err){
-                 console.log(err);
+                 next(err);
                }else{
                  req.flash('success', 'Location Added successfully.')
                  res.redirect("/addLocation");
@@ -34,7 +31,6 @@ module.exports = (req, res, next)=>{
          }
        });
   }).catch((err)=>{
-    console.log(err);
-    res.status(500).send();
+    next(err);
   });
 };

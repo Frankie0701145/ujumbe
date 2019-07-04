@@ -13,12 +13,19 @@
                      <%locations.forEach(function(location){%>
                        <div class='pr-2 container border'>
                          <div class="row p-1">
-                           <span class="col-4"> <%=location.address%> </span>
+                           <span class="col-3"> <%=location.address%> </span>
                            <span class="col-1"> Lon: </span>
                            <span class="col-2"> <%=location.coordinate.coordinate[0].toString().substring(0,6)%> </span>
                            <span class="col-1"> Lat: </span>
                            <span class="col-2"> <%=location.coordinate.coordinate[1].toString().substring(0,6)%></span>
-                           <a class="btn btn-success btn-sm" href="/locationEdit/<%=location.id%>">Edit</a>
+                           <div class="col-1">
+                             <a class="btn btn-success btn-sm" href="/editLocation/<%=location.id%>">Edit</a>
+                           </div>
+                           <div class='col-1'>
+                             <a class="btn btn-danger btn-sm" href="/deleteLocation/<%=location.id%>" onclick="return confirm('Are you sure you want to delete the location?');">
+                               Delete
+                             </a>
+                           </div>
                          </div>
                        </div>
                      <%})%>

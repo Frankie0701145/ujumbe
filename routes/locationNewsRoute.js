@@ -5,6 +5,7 @@ const passport = require("passport");
 
 //controllers
 const addLocationNewsHandler = require("../controllers/newsController/addLocationNewsHandler");
+const locationSpecificNewsHandler = require("../controllers/newsController/locationSpecificNewsHandler")
 // const locationNews  = require("../controllers/locationNewsController");
 // const generateNews = require("../controllers/generateNewsController");
 // const loadComments = require("../controllers/loadNewsController");
@@ -29,10 +30,17 @@ const activationCheck = require("../controllers/middlewares/activationCheck");
 // //shows news from specific location
 // router.get("/locationNews", isAuthenticatedCheck, activationCheck, locationNews);
 
-//route to display the addNews page
+// //endpoint show all news from the locations the user follows
+// router.get("/allNews",isAuthenticatedCheck, activationCheck );
+
+//endpoint to show news from specific location that the user follows
+// router.get("locationSpecificNews", isAuthenticatedCheck, activationCheck, locationSpecificNewsHandler);
+
+//endPoint to display the addNews page
 router.get("/addNews", isAuthenticatedCheck, activationCheck, (req, res, next)=>{
     res.render('addNews',{ title: "Ujumbe", errors: req.flash("err"), successMessages: req.flash("success"), req: req, locations:req.user.locations, validationErrors: null});
 });
+//endPoint to post new news
 router.post("/addNews", isAuthenticatedCheck, activationCheck, addLocationNewsHandler);
 
 

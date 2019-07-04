@@ -11,6 +11,7 @@ const forgotPasswordHandler = require("../controllers/userController/forgotPassw
 const resetPasswordHandler = require("../controllers/userController/resetPasswordHandler");
 const changePasswordHandler = require("../controllers/userController/changePasswordHandler");
 const addLocationHandler = require("../controllers/userController/addLocationHandler");
+const deleLocationHandler = require("../controllers/userController/deleteLocationHandler");
 
 //middlewares
 const isAuthenticatedCheck = require("../controllers/middlewares/isAuthenticatedCheck");
@@ -65,7 +66,7 @@ router.post("/resetPassword", changePasswordHandler);
 router.get('/addLocation',isAuthenticatedCheck,activationCheck, (req, res, next)=>{
   userModel.findById(req.user.id,'locations').
     then((user)=>{
-      console.log(user.locations.length);
+      // console.log(user.locations.length);
       res.render('addLocation', {title: "Ujumbe", req: req, errors: req.flash("err"), successMessages: req.flash("success"), locations:user.locations});
     }).catch((err)=>{
       console.log(err);
@@ -74,5 +75,6 @@ router.get('/addLocation',isAuthenticatedCheck,activationCheck, (req, res, next)
 });
 //endPoint to add a location
 router.post("/addLocation",isAuthenticatedCheck,activationCheck, addLocationHandler);
-
+//endPoint to delete a location
+router.get("/deleteLocation/:id", isAuthenticatedCheck,activationCheck, deleLocationHandler);
 module.exports.userRouter = router;

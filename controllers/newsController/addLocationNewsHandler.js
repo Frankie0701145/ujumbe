@@ -1,5 +1,5 @@
 const newsModel = require("../../models/newsModel");
-
+const userModel = require("../../models/userModel");
 const getNewsParams = (req) => {
 
       let addNewsParams ={
@@ -18,13 +18,24 @@ const addNewsHandler = (req, res, next)=>{
     let addNewsParams = getNewsParams(req);
     console.log(addNewsParams);
     const news = new newsModel(addNewsParams);
-    news.save(addNewsParams)
-      .then((doc)=>{
-        console.log("news saved succcessfully");
-        req.flash("success", "News saved successfully");
-        res.redirect('/');
-      })
-      .catch((err)=>{
+    news.save(addNewsParams).
+      then((newNews)=>{
+        userModel.findById(req.user.id).
+         then((user)=>{
+            user.news.push(newNews.id);
+            user.save().
+             then((user)=>{
+                console.log("news saved succcessfully");
+                req.flash("success", "News saved successfully");
+                res.redirect('/');
+            });
+        }).
+         catch((err)=>{
+            console.log(err);
+            next(err);
+        });
+      }).
+      catch((err)=>{
         console.log(err);
         let errors = []
         for(errName in err.errors){

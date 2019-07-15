@@ -5,7 +5,7 @@ const passport = require("passport");
 
 //controllers
 const addLocationNewsHandler = require("../controllers/newsController/addLocationNewsHandler");
-const locationSpecificNewsHandler = require("../controllers/newsController/locationSpecificNewsHandler")
+
 // const locationNews  = require("../controllers/locationNewsController");
 // const generateNews = require("../controllers/generateNewsController");
 // const loadComments = require("../controllers/loadNewsController");

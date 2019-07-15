@@ -9,29 +9,46 @@
                  <h3 class="text-center">Add Location</h3>
                  <%- include ./partials/flashMessage.ejs %>
                  <% if( locations.length > 0){%>
-                   <ul class="p-2">
                      <%locations.forEach(function(location){%>
-                       <div class='pr-2 container border'>
-                         <div class="row p-1">
-                           <span class="col-3"> <%=location.address%> </span>
-                           <span class="col-1"> Lon: </span>
-                           <span class="col-2"> <%=location.coordinate.coordinate[0].toString().substring(0,6)%> </span>
-                           <span class="col-1"> Lat: </span>
-                           <span class="col-2"> <%=location.coordinate.coordinate[1].toString().substring(0,6)%></span>
-                           <div class="col-1">
-                             <a class="btn btn-success btn-sm" href="/editLocation/<%=location.id%>">Edit</a>
-                           </div>
-                           <div class='col-1'>
-                             <a class="btn btn-danger btn-sm" href="/deleteLocation/<%=location.id%>" onclick="return confirm('Are you sure you want to delete the location?');">
-                               Delete
-                             </a>
-                           </div>
+                       <div class='pt-2 container border'>
+                         <div class="row align-items-center">
+                             <div class="col-4">
+                                <%=location.address%>
+                              </div>
+                             <div class="col-2">
+                                <span> Lon:</span>
+                                <span><%=location.coordinate.coordinate[0].toString().substring(0,6)%></span>
+                              </div>
+                             <div class="col-2 ">
+                                  <span>Lat:</span>
+                                  <span><%=location.coordinate.coordinate[1].toString().substring(0,6)%></span>
+                             </div>
+                             <div class="col-1">
+                               <a href="/editLocation/<%=location.id%>">
+                                 <i class="fas fa-edit text-primary" data-toggle="tooltip" data-placement="top" title="Edit this location in map"></i>
+                               </a>
+                             </div>
+                             <div class='col-1'>
+                               <a href="/deleteLocation/<%=location.id%>" onclick="return confirm('Are you sure you want to delete the location?');">
+                                 <i class="fas fa-trash text-danger" data-toggle="tooltip" data-placement="top" title="Delete this location"></i>
+                               </a>
+                             </div>
+                             <div class="col-1">
+                               <%if(location.home){%>
+                                 <a disabled="disabled">
+                                   <i class="fas fa-home text-success" data-toggle="tooltip" data-placement="top" title="Add this location as your home location"></i>
+                                 </a>
+                               <%}else{%>
+                                 <a href="/addHome/<%=location.id%>">
+                                   <i class="fas fa-home text-success" data-toggle="tooltip" data-placement="top" title="Add this location as your home location"></i>
+                                 </a>
+                               <%}%>
+                             </div>
                          </div>
                        </div>
                      <%})%>
-                   </ul>
                  <%}%>
-                 <form class="p-2" action="/addLocation" method="post">
+                 <form class="pt-4" action="/addLocation" method="post">
                    <%- include ./partials/csrfToken.ejs%>
                    <div class="form-group row">
                       <label for="address" class="col-sm-2 col-form-label">Address:</label>

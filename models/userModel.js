@@ -32,9 +32,13 @@ const userSchema =  new Schema({
       default: false
     },
     locations: [{
+        home: {
+          type: Boolean,
+          default: false
+        },
         address: {
           type: String,
-          required: true
+          required: [true, "The address is required"]
         },
         coordinate:{
           type:{
@@ -49,6 +53,7 @@ const userSchema =  new Schema({
     }],
    news: [{type: Schema.Types.ObjectId, ref: 'News'}],
 },{timestamps: true});
+
 //hooks
 //hashing hook
 userSchema.pre('save', function(next){

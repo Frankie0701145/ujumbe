@@ -9,11 +9,11 @@ module.exports = (req, res, next)=>{
       userLocation.remove();
       user.save().
         then((user)=>{
-          req.flash("success", "location deleted successfully");
+          req.flash("success", "Location deleted successfully");
           res.redirect("/addLocation");
         }).
         catch((err)=>{
-          console.log("the location did not delete");
+          console.log("The location did not delete");
           next(err);
         });
     }else{

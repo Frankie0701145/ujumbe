@@ -12,6 +12,7 @@ const resetPasswordHandler = require("../controllers/userController/resetPasswor
 const changePasswordHandler = require("../controllers/userController/changePasswordHandler");
 const addLocationHandler = require("../controllers/userController/addLocationHandler");
 const deleLocationHandler = require("../controllers/userController/deleteLocationHandler");
+const addHomeHandler = require("../controllers/userController/addHomeHandler");
 
 //middlewares
 const isAuthenticatedCheck = require("../controllers/middlewares/isAuthenticatedCheck");
@@ -77,4 +78,5 @@ router.get('/addLocation',isAuthenticatedCheck,activationCheck, (req, res, next)
 router.post("/addLocation",isAuthenticatedCheck,activationCheck, addLocationHandler);
 //endPoint to delete a location
 router.get("/deleteLocation/:id", isAuthenticatedCheck,activationCheck, deleLocationHandler);
+router.get("/addHome/:id", isAuthenticatedCheck,activationCheck,  addHomeHandler );
 module.exports.userRouter = router;

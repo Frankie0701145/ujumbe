@@ -74,6 +74,23 @@ userSchema.methods.geocode = (address, cb)=>{
    geocoder.geocode(address,cb); //parameter of the cb is err, res
 };
 
+//method to add the home location
+userSchema.methods.addHomeLocation = function (proposedHomeLocationId, previousLocationId, cb){
+
+    this.locations.id(proposedHomeLocationId).home = true;
+    // execute if there is already a location with the home true
+    if(previousLocationId){
+      this.locations.id(previousLocationId).home = false;
+      console.log("Changed the previous home location");
+    }
+    this.save().then((user)=>{
+        cb(null,user);
+    }).catch((err)=>{
+      console.log(err);
+      cb(err, null);
+    });
+};
+
 function hashing(user, cb){
   bcrypt.hash(user.password, 10, function(err, hash){
     if (err){

@@ -25,12 +25,12 @@ const Schema = mongoose.Schema;
             type: Number,
             default: 0
           },
-          coordinates: {
+          coordinate: {
             type:{
               type: String,
               default: 'Point',
             },
-            coordinates: {
+            coordinate: {
               type: [Number, Number],//lon, lat
               required : [true, "The news coordinates is required"],
               index: '2dsphere'

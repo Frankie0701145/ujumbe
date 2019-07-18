@@ -5,8 +5,8 @@ const getNewsParams = (req) => {
       let addNewsParams ={
         title: req.body.title,
         text: req.body.text,
-        coordinates: {
-          coordinates: req.body.location.split(',')
+        coordinate: {
+          coordinate: req.body.location.split(',')
         },
         user: req.user.id
       };

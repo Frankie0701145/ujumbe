@@ -2,13 +2,6 @@ const newsModel = require("../../models/newsModel");
 const userModel = require("../../models/userModel");
 
 module.exports = (req, res, next)=>{
-    res.format({
-      "text/html": htmlRequest
-    })
-};
-
-
-const htmlRequest = (req, res, next)=>{
   let perpage = 20;
   const allLocations = req.user.locations;
 
@@ -17,13 +10,12 @@ const htmlRequest = (req, res, next)=>{
 
   if(homeLocation){
     allLocations.splice(homeObjectIndex, 1);
-    console.log(allLocations);
     let homeLon = homeLocation.coordinate.coordinate[0];
     let homeLat = homeLocation.coordinate.coordinate[1];
     newsModel.find(
         {
           "coordinate.coordinate":{
-            "$geoWithin":{"$centerSphere":[[homeLon, homeLat],0.3/3963.2]}
+            "$geoWithin":{"$center":[[homeLon, homeLat],0.3/3963.2]}
           }
         }
     ).populate('user', "firstName lastName")
@@ -31,8 +23,6 @@ const htmlRequest = (req, res, next)=>{
      .limit(perpage)
      .exec()
      .then((news)=>{
-       console.log("Length");
-       console.log(news.length);
        res.render(
           'homeLocationNews',
           {title: "Ujumbe", errors: req.flash("err"),successMessages: req.flash("success"),
@@ -45,4 +35,4 @@ const htmlRequest = (req, res, next)=>{
   }else{
       console.log("No home location");
   }
-}
+};

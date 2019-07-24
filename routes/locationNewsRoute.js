@@ -6,6 +6,7 @@ const passport = require("passport");
 //controllers
 const addLocationNewsHandler = require("../controllers/newsController/addLocationNewsHandler");
 const homeNewsHandler = require("../controllers/newsController/homeNewsHandler");
+const moreNewsHandler = require("../controllers/newsController/moreNewsHandler");
 // const locationNews  = require("../controllers/locationNewsController");
 // const generateNews = require("../controllers/generateNewsController");
 // const loadComments = require("../controllers/loadNewsController");
@@ -38,6 +39,9 @@ const activationCheck = require("../controllers/middlewares/activationCheck");
 
 //endPoint to show news from the home of the user or the first location added
 router.get('/homeNews', isAuthenticatedCheck, activationCheck, homeNewsHandler);
+
+//endpoint to load more news
+router.get('/moreNews/:locationId', isAuthenticatedCheck, activationCheck, moreNewsHandler);
 
 //endPoint to display the addNews page
 router.get("/addNews", isAuthenticatedCheck, activationCheck, (req, res, next)=>{

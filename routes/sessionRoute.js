@@ -5,7 +5,11 @@ const passport = require("passport");
 
 /* Get login page */
 router.get('/login', function(req, res, next){
-  res.render('login', { title: "Ujumbe", req: req, errors: req.flash("err"), successMessages: req.flash("success")});
+  res.render('login', { 
+    req: req,
+    errors: req.flash("err"),
+    successMessages: req.flash("success")
+  });
 });
 
 // Post login

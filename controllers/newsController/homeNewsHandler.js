@@ -23,12 +23,14 @@ module.exports = (req, res, next)=>{
      .limit(perpage)
      .exec()
      .then((news)=>{
-       res.render(
-          'homeLocationNews',
-          {title: "Ujumbe", errors: req.flash("err"),successMessages: req.flash("success"),
-           req: req, allLocations: allLocations, news: news, homeLocation: homeLocation
-          }
-       );
+       res.render('homeLocationNews',{
+          errors: req.flash("err"),
+          successMessages: req.flash("success"),
+          req: req,
+          allLocations: allLocations,
+          news: news,
+          homeLocation: homeLocation
+        });
      }).catch((err)=>{
        console.log(err);
      });

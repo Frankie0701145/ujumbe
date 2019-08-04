@@ -14,14 +14,23 @@ module.exports = function(req, res, next){
       if(req.body.password !== req.body.passwordConfirmation){
         console.log("passwords dont match");
         req.flash("err", "Password and Password Confirmation don't match");
-        res.render("resetPassword",{title: "Ujumbe", req: req, email: req.body.email, errors: req.flash("err"), successMessages: req.flash("success")});
+        res.render("resetPassword",{
+          req: req,
+          email: req.body.email,
+          errors: req.flash("err"),
+          successMessages: req.flash("success")
+        });
       }else{
         console.log("passwords do match");
         userModel.findOne({email: req.body.email}, function(err, user){
           if(!user){
             console.log(err);
             req.flash("err", "User with that email could not be found");
-            res.render("resetPassword",{title: "Ujumbe", req: req, email: req.body.email, errors: req.flash("err"), successMessages: req.flash("success")});
+            res.render("resetPassword",{
+              req: req,
+              email: req.body.email,
+              errors: req.flash("err"),
+              successMessages: req.flash("success")});
           }else{
             user.password = changePasswordParams(req).password;
             user.save(function(err, user){
@@ -31,7 +40,11 @@ module.exports = function(req, res, next){
                   for(errName in err.errors){
                       errors.push({message:err.errors[errName].message});
                   }
-                  res.render("resetPassword",{title: "Ujumbe", req: req, email: req.body.email, errors: errors, successMessages: req.flash("success")});
+                  res.render("resetPassword",{
+                    req: req,
+                    email: req.body.email,
+                    errors: errors,
+                    successMessages: req.flash("success")});
                 }else{
                   console.log("saved");
                   req.flash("success", "Password Changed successfully");

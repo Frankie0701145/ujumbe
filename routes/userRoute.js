@@ -21,7 +21,10 @@ const activationCheck = require("../controllers/middlewares/activationCheck");
 // Get Sign up page
 //end point to get the signup page
 router.get('/signup', function(req, res, next){
-    res.render('signup', {title: "Ujumbe", req: req, validationErrors: null});
+    res.render('signup', {
+      req: req,
+      validationErrors: null
+    });
 });
 
 // Post Signup
@@ -32,7 +35,12 @@ router.post('/signup', signupHandler);
 //Get the activation page
 router.get("/activate", isAuthenticatedCheck, function(req, res, next){
   console.log(req.user.email);
-  res.render("activationAccount", {title: "Ujumbe", req:req, errors: req.flash("err"), successMessages: req.flash("success"), errActivation: req.flash("errActivation")});
+  res.render("activationAccount", {
+    req:req,
+    errors: req.flash("err"),
+    successMessages: req.flash("success"),
+    errActivation: req.flash("errActivation")
+  });
 });
 
 
@@ -47,7 +55,11 @@ router.get("/resendActivationEmail", resendActivationEmailHandler);
 //forgot password page
 //endpoint to get post the email so as to change the password
 router.get("/forgotPassword", function(req, res, next){
-    res.render('forgotPassword', {title: "Ujumbe", req: req, errors: req.flash("err"), successMessages: req.flash("success")});
+    res.render('forgotPassword', {
+      req: req,
+      errors: req.flash("err"),
+      successMessages: req.flash("success")
+    });
 });
 
 //forgot password post page
@@ -62,21 +74,31 @@ router.get("/resetPassword/:accesstoken", resetPasswordHandler);
 //end point to change the password
 router.post("/resetPassword", changePasswordHandler);
 
-//endPoint to server the page to load new location
-
+//endPoint to server the page for add new location
 router.get('/addLocation',isAuthenticatedCheck,activationCheck, (req, res, next)=>{
+  GoogleAPIKey = process.env.GOOGLE_API_KEY
   userModel.findById(req.user.id,'locations').
     then((user)=>{
       // console.log(user.locations.length);
-      res.render('addLocation', {title: "Ujumbe", req: req, errors: req.flash("err"), successMessages: req.flash("success"), locations:user.locations});
+      res.render('addLocation', {
+        req: req,
+        errors: req.flash("err"),
+        successMessages: req.flash("success"),
+        locations:user.locations,
+        key: GoogleAPIKey
+       }
+      );
     }).catch((err)=>{
       console.log(err);
       res.send(err);
     });
 });
+
 //endPoint to add a location
 router.post("/addLocation",isAuthenticatedCheck,activationCheck, addLocationHandler);
 //endPoint to delete a location
 router.get("/deleteLocation/:id", isAuthenticatedCheck,activationCheck, deleLocationHandler);
+
+//endPoint to define the home location
 router.get("/addHome/:id", isAuthenticatedCheck,activationCheck,  addHomeHandler );
 module.exports.userRouter = router;

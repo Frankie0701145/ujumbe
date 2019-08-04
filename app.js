@@ -69,5 +69,5 @@ app.use(function(err, req, res, next) {
 
 //my locals
 app.locals.moment = moment;
-
+app.locals.title = "Ujumbe";
 module.exports = app;

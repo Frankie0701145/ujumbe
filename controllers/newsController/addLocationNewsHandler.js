@@ -41,7 +41,13 @@ const addNewsHandler = (req, res, next)=>{
         for(errName in err.errors){
           errors.push({message:err.errors[errName].message});
         }
-        res.render('addNews',{title: "Ujumbe", req: req, successMessages: req.flash("success"), validationErrors: errors, errors: req.flash(err), locations:req.user.locations});
+        res.render('addNews',{
+          req: req,
+          successMessages: req.flash("success"),
+          validationErrors: errors,
+          errors: req.flash(err),
+          locations:req.user.locations
+        });
     });
 };
 

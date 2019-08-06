@@ -23,18 +23,20 @@ module.exports = (req, res, next)=>{
      .limit(perpage)
      .exec()
      .then((news)=>{
-       res.render('homeLocationNews',{
+       res.render('locationNews',{
           errors: req.flash("err"),
           successMessages: req.flash("success"),
           req: req,
           allLocations: allLocations,
           news: news,
-          homeLocation: homeLocation
+          currentLocation: homeLocation
         });
      }).catch((err)=>{
        console.log(err);
+       res.status(504).send();
      });
   }else{
       console.log("No home location");
+      res.status(404).send();
   }
 };

@@ -3,7 +3,16 @@ const faker = require('faker');
 const path = require('path');
 const mongoose = require('mongoose');
 const News = require("../models/newsModel");
-const number = process.argv[2] || 10;
+const number = process.argv[4] || 10;
+const lon = process.argv[2];
+const lat = process.argv[3];
+
+if(!(lat) || !(lon)){
+  console.error("Pleas provide the lon lat");
+  console.error("The format of the call should be: 'node generateNews lon lat number'");
+  console.error("Where Lon is the longitude, lat is the latitude and number is the number of news to generate");
+  process.exit(1);
+}
 
 const pathTo = `${process.cwd()}/..`;
 let pathOfEnvFile = path.resolve(pathTo, ".env");
@@ -18,7 +27,7 @@ mongoose.connect(process.env.MLAB_URL,{useNewUrlParser: true,useCreateIndex: tru
           news = {
               title: faker.name.title(),
               text: faker.lorem.sentences(),
-              coordinate:{coordinate: [36.0855064, -0.2985643]},
+              coordinate:{coordinate: [lon, lat]},
               user: "5d13502b2984581cdb87c11c"
           }
           newsArray.push(news);

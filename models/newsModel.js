@@ -15,13 +15,15 @@ const Schema = mongoose.Schema;
             type: String,
             required: [true, "The news body is required"]
           },
-          agree: {
-            type: Number
+          agreeNo: {
+            type: Number,
+            default: 0
           },
-          disagree: {
-            type: Number
+          disagreeNo: {
+            type: Number,
+            default: 0
           },
-          commentNo: {
+          commentsNo: {
             type: Number,
             default: 0
           },
@@ -47,6 +49,12 @@ const Schema = mongoose.Schema;
       },
       {timestamps: true}
    );
+//schema methods
+    //the agree method
+newsSchema.methods.agree = function(){
+    console.log(this.agreeNo+=1);
+    return this.save();
+};
 
 const News = mongoose.model("News", newsSchema);
 module.exports = News;

@@ -5,7 +5,7 @@ module.exports = (req, res, next)=>{
   let perpage = 20;
   const allLocations = req.user.locations;
 
-  let homeObjectIndex = allLocations.findIndex(x => x.home == true);
+  let homeObjectIndex = allLocations.findIndex(x => x.home);
   let homeLocation = allLocations[homeObjectIndex];
 
   if(homeLocation){

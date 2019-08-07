@@ -8,6 +8,7 @@ const addLocationNewsHandler = require("../controllers/newsController/addLocatio
 const homeNewsHandler = require("../controllers/newsController/homeNewsHandler");
 const moreNewsHandler = require("../controllers/newsController/moreNewsHandler");
 const locationNewsHandler =  require("../controllers/newsController/locationNewsHandler")
+const agreeWithNewsHandler = require("../controllers/newsController/agreeWithNewsHandler")
 //middlewares
 const isAuthenticatedCheck = require("../controllers/middlewares/isAuthenticatedCheck");
 const activationCheck = require("../controllers/middlewares/activationCheck");
@@ -34,5 +35,7 @@ router.get("/addNews", isAuthenticatedCheck, activationCheck, (req, res, next)=>
 //endPoint to post new news
 router.post("/addNews", isAuthenticatedCheck, activationCheck, addLocationNewsHandler);
 
+//agree endPoint
+router.get("/news/agree/:newsId/:locationId", agreeWithNewsHandler);
 
 module.exports.locationNewsRouter = router;

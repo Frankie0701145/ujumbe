@@ -52,6 +52,8 @@ const userSchema =  new Schema({
         }
     }],
    news: [{type: Schema.Types.ObjectId, ref: 'News'}],
+   agrees: [{type: Schema.Types.ObjectId, ref: 'News'}],
+   disagrees: [{type: Schema.Types.ObjectId, ref: 'News'}]
 },{timestamps: true});
 
 //hooks

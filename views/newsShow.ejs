@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <%- include ./partials/head.ejs %>
+  <body>
+      <%- include ./partials/navBar %>
+      <!--Flash Div  -->
+      <div class="container-fluid justify-content-center">
+          <div class="row justify-content-center">
+            <div class="col-4">
+              <%- include ./partials/flashMessage.ejs %>
+            </div>
+          </div>
+      </div>
+      <div class="container">
+          <div class="row mt-4">
+              <div class="col-12 border p-3 mb-5">
+                <div class="col-12 mt-2">
+                  <!-- the name of the user -->
+                    <img src="#" alt="..." class="img-thumbnail rounded-circle">
+                    <span class=""><%= news.user.firstName%> <%= news.user.lastName%></span>
+                    <span class="float-right"><%= moment(news.createdAt).fromNow()%></span>
+                </div>
+                <!--showint the title -->
+                <div class="col-12 mt-2">
+                  <div class="row justify-content-center">
+                    <span class="font-weight-bold"><%= news.title%></span>
+                  </div>
+                </div>
+                <hr/>
+                <!-- The media frame -->
+                <div class="col-12">
+
+                </div>
+                <!--the text of the news  -->
+                <div class="col-12 mt-2">
+                    <div>
+                      <%= news.text%>
+                    </div>
+                </div>
+                <hr/>
+                <div class="col-12 mt-2">
+                    <div class="row pl-3 border-bottom pb-2">
+                      <div class="col-2">
+                        <%
+                          newsId=news.id;
+                          var resultForAgree = req.user.agrees.findIndex(function(id){
+                              result = id==newsId;
+                              return result;
+                          });
+                          if(resultForAgree!==-1){
+                            //had previously agreed
+                            var urlForThumbUp = "/news/neutral/"+newsId;
+                          }else{
+                            //has not previously agreed
+                            var urlForThumbUp="/news/agree/"+newsId;
+                          }
+                        %>
+                        <a href="<%=urlForThumbUp%>">
+                          <i class="fas fa-thumbs-up fa-lg faa-vertical" data-toggle="tooltip" data-placement="top" title="Do you agree?.">
+                          </i>
+                        </a>
+                        <span class="votingText">
+                            <%=news.agreeNo%>
+                        </span>
+                      </div>
+                      <div class="col-2">
+                        <%
+                          var resultForDisagree = req.user.disagrees.findIndex(function(id){
+                            result = id==newsId;
+                            return result;
+                          });
+                          if(resultForDisagree!==-1){
+                            //had previously disagreed
+                            var urlForThumbDown = "/news/neutral/"+newsId;
+                          }else{
+                            //has not previously disagreed
+                            var urlForThumbDown="/news/disagree/"+newsId;
+                          }
+                        %>
+                        <a href="<%=urlForThumbDown%>">
+                          <i class="far fa-thumbs-down fa-lg" data-toggle="tooltip" data-placement="top" title="Do you disagree?">
+                          </i>
+                        </a>
+                        <span class="votingText">
+                          <%=news.disagreeNo%>
+                        </span>
+                      </div>
+                    </div>
+                </div>
+                <hr/>
+                <!-- Comments -->
+                <div class="col-12 mt-2">
+                    <div class="col-12 pr-0">
+                      <h6><%=news.commentsNo%> Comments</h6>
+                    </div>
+                    <div class="form-group row">
+                      <img src="#" alt="..." class="img-thumbnail rounded-circle">
+                      <div class="col-9">
+                        <input type="text" class="form-control" id="comment" placeholder="Comment">
+                      </div>
+                    </div>
+                    <div class="col-12 mt-1">
+                        <a class="btn">Comment</a>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  </body>
+</html>

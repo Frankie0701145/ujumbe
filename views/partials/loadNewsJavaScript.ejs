@@ -29,7 +29,11 @@
        var name = val.user.firstName + " " + val.user.lastName;
        var title = val.title;
        var text = val.text;
+       var disAgreeNo = val.disagreeNo;
+       var newsId = val._id;
+       var agreeNo = val.agreeNo;
        var dateDiff = moment(val.createdAt).fromNow();
+       var  showNewsUrl = "/showLocationNews/"+newsId;
        var html = '<div class="row">\
              <!--showing the user name  -->\
              <div class="col-12 mt-2">\
@@ -54,22 +58,19 @@
              <div class="col-12 mt-2">\
                  <div class="row pl-3">\
                    <div class="col-2">\
-                     <a href="#">\
-                       <i class="fas fa-thumbs-up fa-sm faa-vertical"></i>\
-                       <span class="votingText">1000</span>\
-                     <a>\
+                       <i class="fas fa-thumbs-up fa-lg faa-vertical" data-toggle="tooltip" data-placement="top" title="This the number of people that agree with the news."></i>\
+                       <span class="votingText">'+agreeNo+'</span>\
                    </div>\
                    <div class="col-2">\
-                     <a href="#">\
-                       <i class="far fa-thumbs-down fa-sm"></i>\
-                       <span class="votingText">1000</span>\
-                     </a>\
+                       <i class="far fa-thumbs-down fa-lg" data-toggle="tooltip" data-placement="top" title="This the number of people that disagree with the news."></i>\
+                       <span class="votingText">'+disAgreeNo+'</span>\
                    </div>\
                    <div class="col-4">\
-                       <a href="#">\
-                         <i class="far fa-comments fa-sm"></i>\
+                         <i class="far fa-comments fa-lg" data-toggle="tooltip" data-placement="top" title="This is the number of comment."></i>\
                          <span class="votingText">Comment</span>\
-                       </a>\
+                   </div>\
+                   <div class="col-4">\
+                     <a href="'+ showNewsUrl + '">..More</a>\
                    </div>\
                  </div>\
              </div>\

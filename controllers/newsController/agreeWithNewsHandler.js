@@ -7,36 +7,44 @@ module.exports =  (req, res, next)=>{
         if(news){
           UserModel.findById(req.user.id)
             .then((user)=>{
+              //make sure the user did not previously agree with the news
+              let newsAgreeIndex = user.agrees.findIndex(id => id==req.params.newsId);
+              if(newsAgreeIndex!==-1){
+                req.flash('err', 'You have previously agreed with this news');
+                return res.redirect(`/showLocationNews/${req.params.newsId}`);
+              }
               //find if the user had previously disagreed with the news
-              let index = user.disagrees.findIndex(id => id===req.params.newsId);
-              let didPreviouslyDisagree;
-              if(!(index==-1)){
+              let newsDisagreeIndex = user.disagrees.findIndex(id => id==req.params.newsId);
+              let didPreviouslyDisagree = false;
+
+              if(newsDisagreeIndex!==-1){
                 //if user had previously disagreed with the news remove it
-                console.log("inside the if");
-                user.disagree[index].remove();
+                user.disagrees.splice(newsDisagreeIndex,1);
                 didPreviouslyDisagree = true;
               }
-              user.agrees.push(news.id)
+              //add the news id
+              user.agrees.push(news.id);
               user.save().then((user)=>{
                 news.agree(didPreviouslyDisagree).then((news)=>{
-                  res.status("202").redirect(`/locationNews/${req.params.locationId}`);
+                  req.flash("success", "Agreed successfully");
+                  res.redirect(`/showLocationNews/${req.params.newsId}`);
                 }).catch((err)=>{
                   console.log(err);
-                  res.status("504").send();
+                  res.status("500").send();
                 });
               }).catch((err)=>{
                 console.log(err);
-                res.status("504").send();
+                res.status("500").send();
               });
             }).catch((err)=>{
               console.log(err);
-              res.status("504").send();
+              res.status("500").send();
             });
         }else{
           return res.status("404").send();
         }
       }).catch((err)=>{
         console.log(err);
-        res.status("504").send();
+        res.status("500").send();
       });
 };

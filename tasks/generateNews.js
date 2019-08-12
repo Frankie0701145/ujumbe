@@ -34,10 +34,11 @@ mongoose.connect(process.env.MLAB_URL,{useNewUrlParser: true,useCreateIndex: tru
         }
         News.insertMany(newsArray).then((docs)=>{
             console.log("saved");
+            console.log(docs);
             process.exit();
         }).catch((err)=>{
           console.error(err);
-          process.exit
+          process.exit(1);
         })
     })
     .catch((err)=>{

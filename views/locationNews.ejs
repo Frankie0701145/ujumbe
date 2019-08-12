@@ -60,32 +60,30 @@
                           <div class="col-12 mt-2">
                               <div class="row pl-3 border-bottom pb-2">
                                 <div class="col-2">
-                                  <a href="/news/agree/<%=n.id%>/<%=currentLocation.id%>">
-                                    <i class="fas fa-thumbs-up fa-lg faa-vertical" data-toggle="tooltip" data-placement="top" title="Do you Agree with this?">
-                                    </i>
-                                  <a>
-                                    <span class="votingText">
+                                  <i class="fas fa-thumbs-up fa-lg faa-vertical" data-toggle="tooltip" data-placement="top" title="This the number of people that agree with the news.">
+                                  </i>
+                                  <span class="votingText">
                                       <%=n.agreeNo%>
-                                    </span>
+                                  </span>
                                 </div>
                                 <div class="col-2">
-                                  <a href="#">
-                                    <i class="far fa-thumbs-down fa-lg" data-toggle="tooltip" data-placement="top" title="Do you Disagree with this?">
-                                    </i>
-                                  </a>
+                                  <i class="far fa-thumbs-down fa-lg" data-toggle="tooltip" data-placement="top" title="This the number of people that disagree with the news.">
+                                  </i>
+
                                   <span class="votingText">
                                     <%=n.disagreeNo%>
                                   </span>
                                 </div>
                                 <div class="col-4">
-                                    <a href="#">
-                                      <i class="far fa-comments fa-lg" data-toggle="tooltip" data-placement="top" title="Comment">
-                                      </i>
+                                    <i class="far fa-comments fa-lg" data-toggle="tooltip" data-placement="top" title="This is the number of comment.">
+                                    </i>
                                       <!--Comment button to load a modal that loads comments-->
-                                      <span class="votingText">
+                                    <span class="votingText">
                                           <%=n.commentsNo%>
-                                      </span>
-                                    </a>
+                                    </span>
+                                </div>
+                                <div class="col-4">
+                                  <a href="/showLocationNews/<%=n.id%>">..More</a>
                                 </div>
                               </div>
                           </div>

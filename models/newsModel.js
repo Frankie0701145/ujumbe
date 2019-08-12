@@ -51,9 +51,27 @@ const Schema = mongoose.Schema;
    );
 //schema methods
     //the agree method
-newsSchema.methods.agree = function(){
-    console.log(this.agreeNo+=1);
+newsSchema.methods.agree = function(didPreviouslyDisagree){
+    this.agreeNo+=1;
+    if(didPreviouslyDisagree){
+      this.disagreeNo-=1;
+    }
     return this.save();
+};
+newsSchema.methods.disagree = function(didPreviouslyAgree){
+  this.disagreeNo+=1;
+  if(didPreviouslyAgree){
+    this.agreeNo-=1;
+  }
+  return this.save();
+};
+newsSchema.methods.neutral = function(didPreviouslyAgree,didPreviouslyDisagree){
+  if(didPreviouslyAgree){
+    this.agreeNo-=1;
+  }else if (didPreviouslyDisagree) {
+    this.disagreeNo-=1;
+  }
+  return this.save();
 };
 
 const News = mongoose.model("News", newsSchema);

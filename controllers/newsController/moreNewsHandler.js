@@ -17,7 +17,7 @@ module.exports = (req, res, next)=>{
             "$geoWithin":{"$center":[[homeLon, homeLat],0.3/3963.2]}
           }
         }
-      ).populate('user',"firstName lastName")
+      ).populate('user',"firstName lastName agrees disagrees")
        .sort({createdAt: "descending"})
        .limit(perpage)
        .skip(perpage*page)

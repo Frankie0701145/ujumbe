@@ -1,8 +1,7 @@
-const homeRouter = require('./homeRoute').indexRouter;
-const newsRouter = require('./newsRoute').locationNewsRouter;
-// const newsRouter = require('./routes/newsRoute');
-const sessionRouter = require('./sessionRoute').sessionRouter;
-const userRouter = require('./userRoute').userRouter;
+const homeRouter = require('./homeRouter').indexRouter;
+const newsRouter = require('./newsRouter').locationNewsRouter;
+const sessionRouter = require('./sessionRouter').sessionRouter;
+const userRouter = require('./userRouter').userRouter;
+const commentRouter = require('./commentRouter').commentRouter;
 
-
-module.exports = [homeRouter, newsRouter, sessionRouter, userRouter];
+module.exports = [homeRouter, newsRouter, sessionRouter, userRouter, commentRouter];

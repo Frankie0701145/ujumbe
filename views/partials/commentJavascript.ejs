@@ -1,0 +1,114 @@
+  <script>
+      //make sure the comment text length is more than or equals to 1
+      $("#comment").keyup(function(){
+        var commentText = $("#comment").val();
+        var commentLength = commentText.length;
+        if(commentLength >= 1){
+          $("#commentBtn").prop("disabled", false);
+        }else{
+          $("#commentBtn").prop("disabled", true);
+        }
+      });
+      //function to comment
+      function commenting(){
+        var comment = $("#comment").val();
+        var newsId = $("#newsId").val();
+        var csrfToken = $("#csrf").val();
+        $("#spinner").prop("hidden", false);
+        var url = "/comment/:" + newsId;
+        var data = {
+          comment: comment,
+          newsId: newsId,
+          _csrf: csrfToken
+        };
+        $("#commentBtn").prop("disabled", true);
+        $("#comment").val("");
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          success: function(data, status, xhr){
+            addCommentHtml(data, "prepend");
+          },
+          error: function(jqXHR, textStatus, err){
+            console.log(jqXHR);
+            console.log('text status '+textStatus+', err '+err);
+            $("#spinner").prop("hidden", true);
+          }
+        });
+      }
+      //function to add comments to the DOM
+      function addCommentHtml(data, where){
+        var name = data.name;
+        var commentObject = data.comment;
+        var commentText = commentObject.comment;
+        var commentLikes = commentObject.likes;
+        var commentDislikes = commentObject.dislikes;
+        var timeDiff = moment(commentObject.createdAt).fromNow();
+
+        var html='\
+          <div class="row mt-2 p-2 border-bottom" id="commentsWrapper">\
+            <!-- the profile pic of the user -->\
+            <div class="mr-1">\
+              <img src="#" alt="..." class="img-thumbnail rounded-circle">\
+            </div>\
+            <div class="col">\
+              <!-- Name and Time -->\
+              <div class="pb-3">\
+                <span class="font-weight-bold">'+name+'</span>\
+                <span class=""> '+timeDiff+' </span>\
+              </div>\
+              <!-- Comment -->\
+              <div class="">\
+                <p>'+commentText+'</p>\
+              </div>\
+              <!-- likes and dislike buttons -->\
+              <div class="row">\
+                <div class="col-2">\
+                  <a href="#">\
+                    <i class="fas fa-thumbs-up fa-lg faa-vertical" data-toggle="tooltip" data-placement="top" title="Do you agree?.">\
+                    </i>\
+                  </a>\
+                  <span class="votingText">\
+                    '+commentLikes+'\
+                  </span>\
+                </div>\
+                <div class="col-2">\
+                  <a href="#">\
+                    <i class="far fa-thumbs-down fa-lg" data-toggle="tooltip" data-placement="top" title="Do you disagree?">\
+                    </i>\
+                  </a>\
+                  <span class="votingText">\
+                    '+commentDislikes+'\
+                  </span>\
+                </div>\
+                <div class="col-2">\
+                  <a href="#">\
+                      <i class="fas fa-edit text-primary" data-toggle="tooltip" data-placement="top" title="Edit this comment">\
+                      </i>\
+                  </a>\
+                </div>\
+                <div class="col-2">\
+                  <a href="#">\
+                    <i class="fas fa-trash text-danger" data-toggle="tooltip" data-placement="top" title="Delete this comment">\
+                    </i>\
+                  </a>\
+                </div>\
+              </div>\
+            </div>\
+          </div>\
+        ';
+        //if the command is to prepend
+        if(where == "prepend"){
+          $("#commentUpperWrapper").prepend(html);
+          var commentNo = parseInt($("#commentNo").text());
+          commentNo+=1;
+          $("#commentNo").text(commentNo);
+          $("#spinner").prop("hidden", true);
+        }
+        //if the command is to append
+        else if (where == "append") {
+          $("#commentUpperWrapper").append(html);
+        }
+      }
+  </script>

@@ -12,3 +12,8 @@ a {
   font-style: italic;
   color: black;
 }
+#commentUpperWrapper{
+  overflow-y: hidden;
+  overflow-y: auto;
+  max-height:700px;
+}

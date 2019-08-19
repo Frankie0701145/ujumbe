@@ -58,6 +58,7 @@ newsSchema.methods.agree = function(didPreviouslyDisagree){
     }
     return this.save();
 };
+    //the disagree method
 newsSchema.methods.disagree = function(didPreviouslyAgree){
   this.disagreeNo+=1;
   if(didPreviouslyAgree){
@@ -65,6 +66,7 @@ newsSchema.methods.disagree = function(didPreviouslyAgree){
   }
   return this.save();
 };
+    //the neutral method
 newsSchema.methods.neutral = function(didPreviouslyAgree,didPreviouslyDisagree){
   if(didPreviouslyAgree){
     this.agreeNo-=1;
@@ -73,6 +75,14 @@ newsSchema.methods.neutral = function(didPreviouslyAgree,didPreviouslyDisagree){
   }
   return this.save();
 };
+
+//hook to change the number of comments
+newsSchema.pre('save',function(next){
+  if(this.isModified('comments')){
+    this.commentsNo = this.comments.length;
+    next();
+  }
+});
 
 const News = mongoose.model("News", newsSchema);
 module.exports = News;

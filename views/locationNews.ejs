@@ -21,7 +21,7 @@
                       <a href="/homeNews" class="list-group-item list-group-item-action active">
                         <%=currentLocation.address%>
                       </a>
-                      <% if(allLocations => 0 ){%>
+                      <% if(allLocations.length > 0 ){%>
                         <%  allLocations.forEach(function(location, index){%>
                           <a href="/locationNews/<%=location.id%>" class="list-group-item list-group-item-action">
                             <%=location.address%>

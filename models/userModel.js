@@ -53,7 +53,8 @@ const userSchema =  new Schema({
     }],
    news: [{type: Schema.Types.ObjectId, ref: 'News'}],
    agrees: [{type: Schema.Types.ObjectId, ref: 'News'}],
-   disagrees: [{type: Schema.Types.ObjectId, ref: 'News'}]
+   disagrees: [{type: Schema.Types.ObjectId, ref: 'News'}],
+   comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}]
 },{timestamps: true});
 
 //hooks
@@ -92,7 +93,12 @@ userSchema.methods.addHomeLocation = function (proposedHomeLocationId, previousL
       cb(err, null);
     });
 };
+userSchema.method.comment = function(commentId){
+  this.comment.push(commentId);
+  return this.save();
+}
 
+//private methods
 function hashing(user, cb){
   bcrypt.hash(user.password, 10, function(err, hash){
     if (err){

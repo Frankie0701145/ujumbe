@@ -32,6 +32,6 @@
   },
   "devDependencies": {
     "faker": "^4.1.0",
-    "webpack": "^4.28.2"
+    "webpack": "^5.75.0"
   }
 }
